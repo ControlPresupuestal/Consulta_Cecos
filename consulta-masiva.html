@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="es" xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+<html lang="es">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -11,17 +11,9 @@
 .panel{margin-top:12px;overflow:hidden}.head{padding:11px 14px;background:var(--sf);border-bottom:1px solid var(--ln);font-weight:900;color:var(--bd)}.body{padding:14px}.intro{color:var(--mu);font-size:12px;margin-bottom:10px}
 .grid{display:grid;grid-template-columns:minmax(300px,34%) 1fr;gap:12px}.left textarea{width:100%;min-height:260px;resize:vertical;border:1px solid var(--ln);border-radius:10px;padding:11px;font:13px Consolas,"Segoe UI",monospace;color:var(--tx);background:#fff}
 .actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}button{border:0;border-radius:8px;padding:9px 12px;font-weight:800;cursor:pointer}.primary{background:var(--b);color:#fff}.light{background:#edf2f7;color:var(--tx)}button:disabled{opacity:.5;cursor:not-allowed}
-.summary{font-size:12px;color:var(--mu);margin:0 0 8px}.summary b{color:var(--tx)}.scroll{overflow:auto;border:1px solid var(--ln);border-radius:10px;max-height:560px}.table{width:100%;border-collapse:collapse;min-width:900px;font-size:12px}.table th{position:sticky;top:0;background:var(--b);color:#fff;padding:8px;text-align:left;z-index:1}.table td{padding:8px;border-bottom:1px solid #edf2f7;vertical-align:top}.table tr:hover td{background:#f8fbfe}.notfound td{background:#fff4f2;color:var(--r);font-weight:700}.dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex:0 0 9px}.active{background:var(--g)}.inactive{background:var(--r)}.status{display:inline-flex;align-items:center;gap:5px;font-weight:900}.plan{color:var(--yt);font-weight:900}.muted{color:var(--mu)}.loader{padding:50px;text-align:center;color:var(--mu);font-weight:700}.error{color:var(--r)}
+.summary{font-size:12px;color:var(--mu);margin:0 0 8px}.summary b{color:var(--tx)}.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px}.tab{background:#edf2f7;color:var(--tx);padding:7px 10px;border-radius:999px;font-size:12px}.tab.active{background:var(--b);color:#fff}.tab .n{font-weight:900}.table th.sortable{cursor:pointer;user-select:none}.table th.sortable:hover{background:var(--bd)}.sortmark{font-size:10px;opacity:.85;margin-left:4px}.scroll{overflow:auto;border:1px solid var(--ln);border-radius:10px;max-height:560px}.table{width:100%;border-collapse:collapse;min-width:900px;font-size:12px}.table th{position:sticky;top:0;background:var(--b);color:#fff;padding:8px;text-align:left;z-index:1}.table td{padding:8px;border-bottom:1px solid #edf2f7;vertical-align:top}.table tr:hover td{background:#f8fbfe}.notfound td{background:#fff4f2;color:var(--r);font-weight:700}.dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex:0 0 9px}.active{background:var(--g)}.inactive{background:var(--r)}.status{display:inline-flex;align-items:center;gap:5px;font-weight:900}.plan{color:var(--yt);font-weight:900}.muted{color:var(--mu)}.loader{padding:50px;text-align:center;color:var(--mu);font-weight:700}.error{color:var(--r)}
 @media(max-width:900px){.grid{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}}
 </style>
-
-<!--[if gte mso 9]><xml>
-<mso:CustomDocumentProperties>
-<mso:_dlc_DocId msdt:dt="string">UT5DNZMK4W5E-800651695-1165123</mso:_dlc_DocId>
-<mso:_dlc_DocIdItemGuid msdt:dt="string">667e32fd-4deb-442e-be17-21d71a2de855</mso:_dlc_DocIdItemGuid>
-<mso:_dlc_DocIdUrl msdt:dt="string">https://agsantaazulperu.sharepoint.com/sites/FS-ASA/_layouts/15/DocIdRedir.aspx?ID=UT5DNZMK4W5E-800651695-1165123, UT5DNZMK4W5E-800651695-1165123</mso:_dlc_DocIdUrl>
-</mso:CustomDocumentProperties>
-</xml><![endif]-->
 </head>
 <body>
 <div class="app">
@@ -46,9 +38,24 @@
       </div>
       <div>
         <div id="massSummary" class="summary">Cargando información…</div>
+        <div class="tabs">
+          <button class="tab active" data-filter="TODOS">Todos <span class="n" id="nTodos">0</span></button>
+          <button class="tab" data-filter="ACTIVO">Activos <span class="n" id="nActivos">0</span></button>
+          <button class="tab" data-filter="INACTIVO">Inactivos <span class="n" id="nInactivos">0</span></button>
+          <button class="tab" data-filter="PLANILLAS">⚠ Planillas <span class="n" id="nPlanillas">0</span></button>
+          <button class="tab" data-filter="NO_ENCONTRADO">No encontrados <span class="n" id="nNoEncontrados">0</span></button>
+        </div>
         <div class="scroll">
           <table class="table">
-            <thead><tr><th>Código</th><th>Descripción</th><th>Estado</th><th>Mes inicio</th><th>Mes fin</th><th>Empresa</th><th>Planillas</th></tr></thead>
+            <thead><tr>
+      <th class="sortable" data-sort="codigo">Código <span class="sortmark">↕</span></th>
+      <th class="sortable" data-sort="descripcion">Descripción <span class="sortmark">↕</span></th>
+      <th class="sortable" data-sort="estado">Estado <span class="sortmark">↕</span></th>
+      <th class="sortable" data-sort="inicio">Mes inicio <span class="sortmark">↕</span></th>
+      <th class="sortable" data-sort="fin">Mes fin <span class="sortmark">↕</span></th>
+      <th class="sortable" data-sort="empresa">Empresa <span class="sortmark">↕</span></th>
+      <th class="sortable" data-sort="planillas">Planillas <span class="sortmark">↕</span></th>
+    </tr></thead>
             <tbody id="massResults"><tr><td colspan="7" class="loader">Cargando CECOs…</td></tr></tbody>
           </table>
         </div>
@@ -59,7 +66,7 @@
 </div>
 
 <script>
-let DATA=[],RESTRICTED=[],MASS_ROWS=[];
+let DATA=[],RESTRICTED=[],MASS_ROWS=[],MASS_FILTER='TODOS',SORT_KEY='',SORT_DIR=1;
 const $=x=>document.getElementById(x),N=s=>String(s??'').trim().toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''),E=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const NOW=new Date();NOW.setHours(0,0,0,0);let RSET=new Set();
 const val=(o,...names)=>{for(const n of names){if(Object.prototype.hasOwnProperty.call(o,n))return String(o[n]??'').trim()}return''};
@@ -77,6 +84,44 @@ function parseCodes(txt){
  raw.forEach(x=>{const k=N(x);if(!seen.has(k)){seen.add(k);out.push(x)}});
  return out;
 }
+
+function filteredRows(){
+  let rows=[...MASS_ROWS];
+  if(MASS_FILTER==='ACTIVO') rows=rows.filter(r=>!r.notfound&&r.estado==='ACTIVO');
+  else if(MASS_FILTER==='INACTIVO') rows=rows.filter(r=>!r.notfound&&r.estado==='INACTIVO');
+  else if(MASS_FILTER==='PLANILLAS') rows=rows.filter(r=>!r.notfound&&r.planillas.startsWith('⚠'));
+  else if(MASS_FILTER==='NO_ENCONTRADO') rows=rows.filter(r=>r.notfound);
+  if(SORT_KEY){
+    rows.sort((a,b)=>{
+      const av=N(a[SORT_KEY]),bv=N(b[SORT_KEY]);
+      if(av<bv)return -1*SORT_DIR;
+      if(av>bv)return 1*SORT_DIR;
+      return 0;
+    });
+  }
+  return rows;
+}
+function updateCounts(){
+  $('nTodos').textContent=MASS_ROWS.length;
+  $('nActivos').textContent=MASS_ROWS.filter(r=>!r.notfound&&r.estado==='ACTIVO').length;
+  $('nInactivos').textContent=MASS_ROWS.filter(r=>!r.notfound&&r.estado==='INACTIVO').length;
+  $('nPlanillas').textContent=MASS_ROWS.filter(r=>!r.notfound&&r.planillas.startsWith('⚠')).length;
+  $('nNoEncontrados').textContent=MASS_ROWS.filter(r=>r.notfound).length;
+}
+function renderMassRows(){
+  const rows=filteredRows();
+  if(!rows.length){
+    $('massResults').innerHTML='<tr><td colspan="7" class="muted">No hay resultados en esta vista.</td></tr>';
+    return;
+  }
+  $('massResults').innerHTML=rows.map(r=>`<tr class="${r.notfound?'notfound':''}">
+    <td><b>${E(r.codigo)}</b></td><td>${E(r.descripcion)}</td>
+    <td>${r.notfound?E(r.estado):`<span class="status"><span class="dot ${r.estado==='ACTIVO'?'active':'inactive'}"></span>${E(r.estado)}</span>`}</td>
+    <td>${E(r.inicio)}</td><td>${E(r.fin)}</td><td>${E(r.empresa)}</td>
+    <td class="${r.planillas.startsWith('⚠')?'plan':''}">${E(r.planillas)}</td>
+  </tr>`).join('');
+}
+
 function runMass(){
  const codes=parseCodes($('massInput').value);MASS_ROWS=[];
  if(!codes.length){$('massResults').innerHTML='<tr><td colspan="7" class="muted">Pega al menos un código para consultar.</td></tr>';$('massSummary').textContent='Sin códigos para consultar.';$('massCopy').disabled=true;$('massCsv').disabled=true;return}
@@ -91,7 +136,7 @@ function runMass(){
      });
    }
  });
- $('massResults').innerHTML=MASS_ROWS.map(r=>`<tr class="${r.notfound?'notfound':''}"><td><b>${E(r.codigo)}</b></td><td>${E(r.descripcion)}</td><td>${r.notfound?E(r.estado):`<span class="status"><span class="dot ${r.estado==='ACTIVO'?'active':'inactive'}"></span>${E(r.estado)}</span>`}</td><td>${E(r.inicio)}</td><td>${E(r.fin)}</td><td>${E(r.empresa)}</td><td class="${r.planillas.startsWith('⚠')?'plan':''}">${E(r.planillas)}</td></tr>`).join('');
+ updateCounts(); renderMassRows();
  const found=MASS_ROWS.filter(x=>!x.notfound).length,missing=MASS_ROWS.filter(x=>x.notfound).length,plans=MASS_ROWS.filter(x=>!x.notfound&&x.planillas.startsWith('⚠')).length;
  $('massSummary').innerHTML=`<b>${codes.length}</b> códigos consultados · <b>${found}</b> resultado(s) · <b>${missing}</b> no encontrado(s)${plans?` · ⚠ <b>${plans}</b> uso exclusivo Planillas`:''}`;
  $('massCopy').disabled=false;$('massCsv').disabled=false;
@@ -105,7 +150,7 @@ function downloadCsv(){
  const blob=new Blob([csv],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='Consulta_Masiva_CECOs.csv';a.click();URL.revokeObjectURL(url);
 }
 $('massSearch').onclick=runMass;
-$('massClear').onclick=()=>{$('massInput').value='';MASS_ROWS=[];$('massResults').innerHTML='<tr><td colspan="7" class="muted">Sin resultados todavía.</td></tr>';$('massSummary').innerHTML='Pega una lista y pulsa <b>Consultar</b>.';$('massCopy').disabled=true;$('massCsv').disabled=true};
+$('massClear').onclick=()=>{$('massInput').value='';MASS_ROWS=[];MASS_FILTER='TODOS';SORT_KEY='';SORT_DIR=1;updateCounts();document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.filter==='TODOS'));document.querySelectorAll('.sortmark').forEach(x=>x.textContent='↕');$('massResults').innerHTML='<tr><td colspan="7" class="muted">Sin resultados todavía.</td></tr>';$('massSummary').innerHTML='Pega una lista y pulsa <b>Consultar</b>.';$('massCopy').disabled=true;$('massCsv').disabled=true};
 $('massCopy').onclick=async()=>{try{await navigator.clipboard.writeText(textResults());let t=$('massCopy').textContent;$('massCopy').textContent='✓ Copiado';setTimeout(()=>$('massCopy').textContent=t,1200)}catch(e){prompt('Copia los resultados:',textResults())}};
 $('massCsv').onclick=downloadCsv;
 
@@ -121,6 +166,20 @@ async function init(){
    $('massResults').innerHTML='<tr><td colspan="7" class="error">Error al cargar datos.</td></tr>';
  }
 }
+
+document.querySelectorAll('.tab').forEach(btn=>btn.onclick=()=>{
+  MASS_FILTER=btn.dataset.filter;
+  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===btn));
+  renderMassRows();
+});
+document.querySelectorAll('th.sortable').forEach(th=>th.onclick=()=>{
+  const key=th.dataset.sort;
+  if(SORT_KEY===key) SORT_DIR*=-1; else {SORT_KEY=key;SORT_DIR=1}
+  document.querySelectorAll('.sortmark').forEach(x=>x.textContent='↕');
+  th.querySelector('.sortmark').textContent=SORT_DIR===1?'↑':'↓';
+  renderMassRows();
+});
+
 init();
 </script>
 </body>
