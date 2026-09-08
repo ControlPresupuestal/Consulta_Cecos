@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="es" xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ASA | IA · Consulta masiva de CECOs</title>
+<style>
+:root{--b:#174a8b;--bd:#0f376d;--g:#247a43;--r:#8b1e1e;--y:#d19a00;--yb:#fff6cf;--yt:#725600;--bg:#f5f8fc;--ln:#d7e1ec;--tx:#18324f;--mu:#6b7f95;--sf:#edf4fb}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font:14px Segoe UI,Arial,sans-serif;color:var(--tx)}.app{max-width:1450px;margin:auto;padding:16px}.card{background:#fff;border:1px solid var(--ln);border-radius:14px}
+.top{padding:14px 18px;border-left:7px solid var(--g);display:flex;justify-content:space-between;align-items:center;gap:14px}.brand{display:flex;gap:12px;align-items:center}.logo{background:var(--b);color:#fff;padding:12px;border-radius:10px;font-weight:900}.ey{font-size:11px;color:var(--g);font-weight:900}.brand h1{margin:2px 0;color:var(--bd);font-size:21px}.navbtn{background:#edf2f7;color:var(--tx);text-decoration:none;padding:9px 12px;border-radius:8px;font-weight:800;white-space:nowrap}
+.panel{margin-top:12px;overflow:hidden}.head{padding:11px 14px;background:var(--sf);border-bottom:1px solid var(--ln);font-weight:900;color:var(--bd)}.body{padding:14px}.intro{color:var(--mu);font-size:12px;margin-bottom:10px}
+.grid{display:grid;grid-template-columns:minmax(300px,34%) 1fr;gap:12px}.left textarea{width:100%;min-height:260px;resize:vertical;border:1px solid var(--ln);border-radius:10px;padding:11px;font:13px Consolas,"Segoe UI",monospace;color:var(--tx);background:#fff}
+.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}button{border:0;border-radius:8px;padding:9px 12px;font-weight:800;cursor:pointer}.primary{background:var(--b);color:#fff}.light{background:#edf2f7;color:var(--tx)}button:disabled{opacity:.5;cursor:not-allowed}
+.summary{font-size:12px;color:var(--mu);margin:0 0 8px}.summary b{color:var(--tx)}.scroll{overflow:auto;border:1px solid var(--ln);border-radius:10px;max-height:560px}.table{width:100%;border-collapse:collapse;min-width:900px;font-size:12px}.table th{position:sticky;top:0;background:var(--b);color:#fff;padding:8px;text-align:left;z-index:1}.table td{padding:8px;border-bottom:1px solid #edf2f7;vertical-align:top}.table tr:hover td{background:#f8fbfe}.notfound td{background:#fff4f2;color:var(--r);font-weight:700}.dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex:0 0 9px}.active{background:var(--g)}.inactive{background:var(--r)}.status{display:inline-flex;align-items:center;gap:5px;font-weight:900}.plan{color:var(--yt);font-weight:900}.muted{color:var(--mu)}.loader{padding:50px;text-align:center;color:var(--mu);font-weight:700}.error{color:var(--r)}
+@media(max-width:900px){.grid{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}}
+</style>
+
+<!--[if gte mso 9]><xml>
+<mso:CustomDocumentProperties>
+<mso:_dlc_DocId msdt:dt="string">UT5DNZMK4W5E-800651695-1165123</mso:_dlc_DocId>
+<mso:_dlc_DocIdItemGuid msdt:dt="string">667e32fd-4deb-442e-be17-21d71a2de855</mso:_dlc_DocIdItemGuid>
+<mso:_dlc_DocIdUrl msdt:dt="string">https://agsantaazulperu.sharepoint.com/sites/FS-ASA/_layouts/15/DocIdRedir.aspx?ID=UT5DNZMK4W5E-800651695-1165123, UT5DNZMK4W5E-800651695-1165123</mso:_dlc_DocIdUrl>
+</mso:CustomDocumentProperties>
+</xml><![endif]-->
+</head>
+<body>
+<div class="app">
+<header class="top card">
+  <div class="brand"><div class="logo">ASA | IA</div><div><div class="ey">MAESTRO DE CENTROS DE COSTO</div><h1>Consulta masiva de CECOs</h1></div></div>
+  <a class="navbtn" href="index.html">← Volver a consulta individual</a>
+</header>
+
+<section class="panel card">
+  <div class="head">Consulta varios códigos a la vez</div>
+  <div class="body">
+    <div class="intro">Pega un código por línea. También puedes pegar una columna directamente desde Excel o separar códigos con comas o punto y coma.</div>
+    <div class="grid">
+      <div class="left">
+        <textarea id="massInput" placeholder="Ejemplo:&#10;PRODUVAEA&#10;RIEUVAEA&#10;SANUVAEA"></textarea>
+        <div class="actions">
+          <button id="massSearch" class="primary" disabled>Consultar</button>
+          <button id="massClear" class="light">Limpiar lista</button>
+          <button id="massCopy" class="light" disabled>📋 Copiar resultados</button>
+          <button id="massCsv" class="light" disabled>⬇ Descargar CSV</button>
+        </div>
+      </div>
+      <div>
+        <div id="massSummary" class="summary">Cargando información…</div>
+        <div class="scroll">
+          <table class="table">
+            <thead><tr><th>Código</th><th>Descripción</th><th>Estado</th><th>Mes inicio</th><th>Mes fin</th><th>Empresa</th><th>Planillas</th></tr></thead>
+            <tbody id="massResults"><tr><td colspan="7" class="loader">Cargando CECOs…</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</div>
+
+<script>
+let DATA=[],RESTRICTED=[],MASS_ROWS=[];
+const $=x=>document.getElementById(x),N=s=>String(s??'').trim().toUpperCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''),E=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const NOW=new Date();NOW.setHours(0,0,0,0);let RSET=new Set();
+const val=(o,...names)=>{for(const n of names){if(Object.prototype.hasOwnProperty.call(o,n))return String(o[n]??'').trim()}return''};
+
+function normalizeData(raw){
+ DATA=(raw.cecos||[]).map(x=>({origen:val(x,'Origen','origen'),jerarquia:val(x,'Jerarquia','jerarquia'),codigo:val(x,'Codigo','codigo'),descripcion:val(x,'Descripcion','descripcion'),inicio:val(x,'Fecha_inicio','fecha_inicio','FECHA_INICIO'),fin:val(x,'Fecha_Fin','fecha_fin','FECHA_FIN'),area:val(x,'Area','area'),cuenta:val(x,'Cuenta','cuenta')}));
+ RESTRICTED=(raw.uso_planillas||[]).map(x=>({codigo:val(x,'Codigo','codigo'),jerarquia:val(x,'Jerarquia','jerarquia')}));
+ RSET=new Set(RESTRICTED.map(x=>N(x.codigo)+'|'+N(x.jerarquia)));
+}
+function restricted(r){return RSET.has(N(r.codigo)+'|'+N(r.jerarquia))}
+function st(r){if(!r.fin)return'ACTIVO';return new Date(r.fin+'T23:59:59')>=NOW?'ACTIVO':'INACTIVO'}
+function monthYear(x){if(!x)return'—';let a=String(x).split('-');return a.length>=2?a[1]+'/'+a[0]:x}
+function parseCodes(txt){
+ const raw=String(txt||'').split(/[\n\r\t,;]+/).map(x=>x.trim()).filter(Boolean),seen=new Set(),out=[];
+ raw.forEach(x=>{const k=N(x);if(!seen.has(k)){seen.add(k);out.push(x)}});
+ return out;
+}
+function runMass(){
+ const codes=parseCodes($('massInput').value);MASS_ROWS=[];
+ if(!codes.length){$('massResults').innerHTML='<tr><td colspan="7" class="muted">Pega al menos un código para consultar.</td></tr>';$('massSummary').textContent='Sin códigos para consultar.';$('massCopy').disabled=true;$('massCsv').disabled=true;return}
+ codes.forEach(inputCode=>{
+   const matches=DATA.filter(r=>N(r.codigo)===N(inputCode));
+   if(!matches.length){
+     MASS_ROWS.push({codigo:inputCode,descripcion:'NO ENCONTRADO',estado:'—',inicio:'—',fin:'—',empresa:'—',planillas:'—',notfound:true});
+   }else{
+     matches.forEach(r=>{
+       const estado=st(r),plan=restricted(r);
+       MASS_ROWS.push({codigo:r.codigo,descripcion:r.descripcion||'—',estado,inicio:monthYear(r.inicio),fin:estado==='INACTIVO'?monthYear(r.fin):'—',empresa:r.origen||'—',planillas:plan?'⚠ USO EXCLUSIVO':'No',notfound:false});
+     });
+   }
+ });
+ $('massResults').innerHTML=MASS_ROWS.map(r=>`<tr class="${r.notfound?'notfound':''}"><td><b>${E(r.codigo)}</b></td><td>${E(r.descripcion)}</td><td>${r.notfound?E(r.estado):`<span class="status"><span class="dot ${r.estado==='ACTIVO'?'active':'inactive'}"></span>${E(r.estado)}</span>`}</td><td>${E(r.inicio)}</td><td>${E(r.fin)}</td><td>${E(r.empresa)}</td><td class="${r.planillas.startsWith('⚠')?'plan':''}">${E(r.planillas)}</td></tr>`).join('');
+ const found=MASS_ROWS.filter(x=>!x.notfound).length,missing=MASS_ROWS.filter(x=>x.notfound).length,plans=MASS_ROWS.filter(x=>!x.notfound&&x.planillas.startsWith('⚠')).length;
+ $('massSummary').innerHTML=`<b>${codes.length}</b> códigos consultados · <b>${found}</b> resultado(s) · <b>${missing}</b> no encontrado(s)${plans?` · ⚠ <b>${plans}</b> uso exclusivo Planillas`:''}`;
+ $('massCopy').disabled=false;$('massCsv').disabled=false;
+}
+function textResults(){
+ return [['CODIGO','DESCRIPCION','ESTADO','MES_INICIO','MES_FIN','EMPRESA','USO_PLANILLAS'],...MASS_ROWS.map(r=>[r.codigo,r.descripcion,r.estado,r.inicio,r.fin,r.empresa,r.planillas])].map(r=>r.join('\t')).join('\n');
+}
+function downloadCsv(){
+ const rows=[['CODIGO','DESCRIPCION','ESTADO','MES_INICIO','MES_FIN','EMPRESA','USO_PLANILLAS'],...MASS_ROWS.map(r=>[r.codigo,r.descripcion,r.estado,r.inicio,r.fin,r.empresa,r.planillas])];
+ const csv='\ufeff'+rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(';')).join('\n');
+ const blob=new Blob([csv],{type:'text/csv;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='Consulta_Masiva_CECOs.csv';a.click();URL.revokeObjectURL(url);
+}
+$('massSearch').onclick=runMass;
+$('massClear').onclick=()=>{$('massInput').value='';MASS_ROWS=[];$('massResults').innerHTML='<tr><td colspan="7" class="muted">Sin resultados todavía.</td></tr>';$('massSummary').innerHTML='Pega una lista y pulsa <b>Consultar</b>.';$('massCopy').disabled=true;$('massCsv').disabled=true};
+$('massCopy').onclick=async()=>{try{await navigator.clipboard.writeText(textResults());let t=$('massCopy').textContent;$('massCopy').textContent='✓ Copiado';setTimeout(()=>$('massCopy').textContent=t,1200)}catch(e){prompt('Copia los resultados:',textResults())}};
+$('massCsv').onclick=downloadCsv;
+
+async function init(){
+ try{
+   const res=await fetch('./cecos.json?ts='+Date.now(),{cache:'no-store'});if(!res.ok)throw new Error('HTTP '+res.status);
+   normalizeData(await res.json());
+   $('massSearch').disabled=false;
+   $('massSummary').innerHTML=`Datos cargados: <b>${DATA.length.toLocaleString('es-PE')}</b> CECOs. Pega una lista y pulsa <b>Consultar</b>.`;
+   $('massResults').innerHTML='<tr><td colspan="7" class="muted">Sin resultados todavía.</td></tr>';
+ }catch(err){
+   $('massSummary').innerHTML='<span class="error">No se pudo cargar cecos.json: '+E(err.message)+'</span>';
+   $('massResults').innerHTML='<tr><td colspan="7" class="error">Error al cargar datos.</td></tr>';
+ }
+}
+init();
+</script>
+</body>
+</html>

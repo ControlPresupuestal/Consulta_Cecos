@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="es" xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ASA | IA · Consulta de CECOs</title>
 <style>
 :root{--b:#174a8b;--bd:#0f376d;--g:#247a43;--r:#8b1e1e;--y:#d19a00;--yb:#fff6cf;--yt:#725600;--bg:#f5f8fc;--ln:#d7e1ec;--tx:#18324f;--mu:#6b7f95;--sf:#edf4fb}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);font:14px Segoe UI,Arial,sans-serif;color:var(--tx)}.app{max-width:1500px;margin:auto;padding:16px}.card{background:#fff;border:1px solid var(--ln);border-radius:14px}
-.top{padding:14px 18px;border-left:7px solid var(--g);display:flex;justify-content:space-between;align-items:center}.brand{display:flex;gap:12px;align-items:center}.logo{background:var(--b);color:#fff;padding:12px;border-radius:10px;font-weight:900}.ey{font-size:11px;color:var(--g);font-weight:900}.brand h1{margin:2px 0;color:var(--bd);font-size:21px}.meta{font-size:12px;color:var(--mu);text-align:right}
+.top{padding:14px 18px;border-left:7px solid var(--g);display:flex;justify-content:space-between;align-items:center}.brand{display:flex;gap:12px;align-items:center}.logo{background:var(--b);color:#fff;padding:12px;border-radius:10px;font-weight:900}.ey{font-size:11px;color:var(--g);font-weight:900}.brand h1{margin:2px 0;color:var(--bd);font-size:21px}.meta{font-size:12px;color:var(--mu);text-align:right}.topnav{display:flex;gap:8px;align-items:center}.navbtn{background:var(--b);color:#fff;text-decoration:none;padding:9px 12px;border-radius:8px;font-weight:800;white-space:nowrap}
 .filters{margin-top:10px;padding:10px;display:grid;grid-template-columns:2fr 1fr 1fr auto;gap:8px}.searchbox{position:relative}.searchbox input{width:100%;padding-right:38px}.xbtn{display:none;position:absolute;right:5px;top:50%;transform:translateY(-50%);background:transparent;color:var(--mu);font-size:22px;line-height:1;padding:3px 8px}.xbtn:hover{background:#edf2f7;color:var(--tx)}
 input,select{border:1px solid var(--ln);border-radius:8px;padding:10px;background:#fff;color:var(--tx)}button{border:0;border-radius:8px;padding:8px 11px;font-weight:800;cursor:pointer}.light{background:#edf2f7;color:var(--tx)}
 .summary{margin-top:8px;padding:9px 12px;font-size:12px;color:var(--mu);display:flex;gap:18px;flex-wrap:wrap}.summary b{color:var(--tx)}.layout{display:grid;grid-template-columns:minmax(390px,43%) 1fr;gap:12px;margin-top:10px}.head{padding:11px 14px;background:var(--sf);border-bottom:1px solid var(--ln);font-weight:900;color:var(--bd);display:flex;justify-content:space-between}.tree{padding:9px;max-height:720px;overflow:auto}
@@ -15,20 +15,16 @@ input,select{border:1px solid var(--ln);border-radius:8px;padding:10px;backgroun
 .route{margin-top:11px;color:var(--mu);font-size:12px;line-height:1.5}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}.field{border:1px solid var(--ln);border-radius:10px;padding:11px}.value{margin-top:5px;font-weight:800}.cw{display:flex;justify-content:space-between;gap:8px;align-items:center}.account{margin-top:12px;border:1px solid var(--ln);border-radius:10px;overflow:hidden}.account .h{padding:8px 11px;background:var(--sf);font-size:10px;color:var(--mu);font-weight:900}.account .v{padding:13px;display:flex;gap:12px;align-items:center}.anum{font-size:21px;font-weight:900;color:var(--bd)}mark{background:#ffe98b;color:inherit}
 .loader{padding:70px 20px;text-align:center;color:var(--mu);font-weight:700}.error{color:var(--r)}
 @media(max-width:900px){.filters{grid-template-columns:1fr 1fr}.layout{grid-template-columns:1fr}}@media(max-width:560px){.filters,.grid{grid-template-columns:1fr}}
-</style>
-<!--[if gte mso 9]><xml>
-<mso:CustomDocumentProperties>
-<mso:_dlc_DocId msdt:dt="string">UT5DNZMK4W5E-800651695-1163018</mso:_dlc_DocId>
-<mso:_dlc_DocIdItemGuid msdt:dt="string">15b055dc-0208-4ed4-b95c-61c9728c5174</mso:_dlc_DocIdItemGuid>
-<mso:_dlc_DocIdUrl msdt:dt="string">https://agsantaazulperu.sharepoint.com/sites/FS-ASA/_layouts/15/DocIdRedir.aspx?ID=UT5DNZMK4W5E-800651695-1163018, UT5DNZMK4W5E-800651695-1163018</mso:_dlc_DocIdUrl>
-</mso:CustomDocumentProperties>
-</xml><![endif]-->
-</head><body>
+
+
+</style></head><body>
 <div class="app">
-<header class="top card"><div class="brand"><div class="logo">ASA | IA</div><div><div class="ey">MAESTRO DE CENTROS DE COSTO</div><h1>Consulta de CECOs</h1></div></div><div class="meta" id="top">Cargando datos…</div></header>
+<header class="top card"><div class="brand"><div class="logo">ASA | IA</div><div><div class="ey">MAESTRO DE CENTROS DE COSTO</div><h1>Consulta de CECOs</h1></div></div><div class="topnav"><a class="navbtn" href="consulta-masiva.html">Consulta masiva →</a><div class="meta" id="top">Cargando datos…</div></div></header>
 <section class="filters card"><div class="searchbox"><input id="q" disabled placeholder="🔎 Buscar CECO por nombre o código…"><button id="clearSearch" class="xbtn" title="Borrar búsqueda">×</button></div><select id="origin" disabled><option value="">Todas las empresas</option></select><select id="state" disabled><option value="">Todos los estados</option><option value="ACTIVO">Activos</option><option value="INACTIVO">Inactivos</option></select><button id="clear" class="light" disabled>Limpiar filtros</button></section>
 <div id="summary" class="summary card"><span>Cargando información…</span></div>
 <div class="layout"><section class="card"><div class="head"><span>Estructura</span><span><button id="expand" class="light" disabled>Expandir todo</button> <button id="collapse" class="light" disabled>Contraer</button></span></div><div id="tree" class="tree"><div class="loader">Cargando CECOs…</div></div></section><section class="card"><div class="head">Ficha del CECO</div><div id="detail" class="detail"><div class="empty">Selecciona un CECO para consultar su información.</div></div></section></div>
+
+
 </div>
 <script>
 let DATA=[],RESTRICTED=[],ROOTS=[],open=new Set(),selected='';
@@ -71,5 +67,7 @@ async function init(){
  }
 }
 $('q').oninput=()=>{$('clearSearch').style.display=$('q').value?'block':'none';autoOpen();render()};$('clearSearch').onclick=()=>{$('q').value='';$('clearSearch').style.display='none';$('q').focus();render()};$('origin').onchange=render;$('state').onchange=render;$('clear').onclick=()=>{$('q').value='';$('clearSearch').style.display='none';$('origin').value='';$('state').value='';open.clear();selected='';$('detail').innerHTML='<div class="empty">Selecciona un CECO para consultar su información.</div>';render()};$('expand').onclick=()=>{DATA.forEach(r=>{if(DATA.some(x=>x.origen===r.origen&&PJ(x.jerarquia)===r.jerarquia))open.add(K(r))});render()};$('collapse').onclick=()=>{open.clear();render()};
+
+
 init();
 </script></body></html>
