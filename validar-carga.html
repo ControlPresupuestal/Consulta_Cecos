@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="es" xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ASA | IA · Validar carga de CECOs</title>
+<style>
+:root{--b:#174a8b;--bd:#0f376d;--g:#247a43;--r:#8b1e1e;--y:#d19a00;--yb:#fff6cf;--yt:#725600;--bg:#f5f8fc;--ln:#d7e1ec;--tx:#18324f;--mu:#6b7f95;--sf:#edf4fb}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font:14px Segoe UI,Arial,sans-serif;color:var(--tx)}.app{max-width:1600px;margin:auto;padding:16px}.card{background:#fff;border:1px solid var(--ln);border-radius:14px}
+.top{padding:14px 18px;border-left:7px solid var(--g);display:flex;justify-content:space-between;align-items:center;gap:14px}.brand{display:flex;gap:12px;align-items:center}.logo{background:var(--b);color:#fff;padding:12px;border-radius:10px;font-weight:900}.ey{font-size:11px;color:var(--g);font-weight:900}.brand h1{margin:2px 0;color:var(--bd);font-size:21px}.nav{display:flex;gap:8px}.navbtn{background:#edf2f7;color:var(--tx);text-decoration:none;padding:9px 12px;border-radius:8px;font-weight:800;white-space:nowrap}
+.panel{margin-top:12px;overflow:hidden}.head{padding:11px 14px;background:var(--sf);border-bottom:1px solid var(--ln);font-weight:900;color:var(--bd)}.body{padding:14px}.intro{color:var(--mu);font-size:12px;margin-bottom:12px;line-height:1.5}
+.load{display:grid;grid-template-columns:200px 1fr 220px auto;gap:10px;align-items:end}.lbl{font-size:10px;color:var(--mu);font-weight:900;text-transform:uppercase;margin-bottom:5px}
+input,select{width:100%;border:1px solid var(--ln);border-radius:8px;padding:9px;background:#fff;color:var(--tx);font:inherit}button{border:0;border-radius:8px;padding:10px 14px;font-weight:800;cursor:pointer;font:inherit;font-weight:800}.primary{background:var(--b);color:#fff}.light{background:#edf2f7;color:var(--tx)}button:disabled{opacity:.5;cursor:not-allowed}
+.msg{margin-top:10px;font-size:12px;color:var(--mu)}.msg.error{color:var(--r);font-weight:700}
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}.tile{padding:12px 14px;border-radius:12px;border:1px solid var(--ln);background:#fff}.tile .n{font-size:24px;font-weight:900;margin-top:3px}.tile.ok .n{color:var(--g)}.tile.rv .n{color:var(--yt)}.tile.er .n{color:var(--r)}.tile .p{font-size:11px;color:var(--mu)}
+.bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:12px 0 10px}.tab{background:#edf2f7;color:var(--tx);padding:7px 11px;border-radius:999px;font-size:12px}.tab.active{background:var(--b);color:#fff}.bar .sp{flex:1}.bar input{width:280px}
+.scroll{overflow:auto;border:1px solid var(--ln);border-radius:10px;max-height:620px}.table{width:100%;border-collapse:collapse;min-width:1700px;font-size:12px}.table th{position:sticky;top:0;background:var(--b);color:#fff;padding:8px;text-align:left;z-index:1;white-space:nowrap}.table td{padding:7px 8px;border-bottom:1px solid #edf2f7;vertical-align:top}.table tr:hover td{background:#f8fbfe}
+.st{display:inline-flex;align-items:center;gap:5px;font-weight:900;white-space:nowrap}.dot{width:9px;height:9px;border-radius:50%;display:inline-block}.d-ok{background:var(--g)}.d-rv{background:var(--y)}.d-er{background:var(--r)}.s-ok{color:var(--g)}.s-rv{color:var(--yt)}.s-er{color:var(--r)}.sug{color:var(--b);font-weight:700}.muted{color:var(--mu)}.note{font-size:11px;color:var(--mu);margin-top:8px}.hidden{display:none}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--mu);margin-top:10px}.legend b{color:var(--tx)}
+@media(max-width:900px){.load{grid-template-columns:1fr}.tiles{grid-template-columns:1fr 1fr}.top{flex-direction:column;align-items:flex-start}}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<!--[if gte mso 9]><xml>
+<mso:CustomDocumentProperties>
+<mso:_dlc_DocId msdt:dt="string">UT5DNZMK4W5E-800651695-1217210</mso:_dlc_DocId>
+<mso:_dlc_DocIdItemGuid msdt:dt="string">e5126067-8d35-4467-abb7-ff240095ce32</mso:_dlc_DocIdItemGuid>
+<mso:_dlc_DocIdUrl msdt:dt="string">https://agsantaazulperu.sharepoint.com/sites/FS-ASA/_layouts/15/DocIdRedir.aspx?ID=UT5DNZMK4W5E-800651695-1217210, UT5DNZMK4W5E-800651695-1217210</mso:_dlc_DocIdUrl>
+</mso:CustomDocumentProperties>
+</xml><![endif]-->
+</head><body>
+<div class="app">
+<header class="top card">
+  <div class="brand"><div class="logo">ASA | IA</div><div><div class="ey">MAESTRO DE CENTROS DE COSTO</div><h1>Validar carga de CECOs</h1></div></div>
+  <div class="nav"><a class="navbtn" href="index.html">← Consulta individual</a><a class="navbtn" href="consulta-masiva.html">Consulta masiva</a></div>
+</header>
+
+<section class="panel card">
+  <div class="head">1. Carga tu archivo</div>
+  <div class="body">
+    <div class="intro">Sube un Excel con las columnas <b>IDCCOSTO</b>, <b>PARTIDA</b> y <b>RUBRO</b> (pueden estar en cualquier posición; las demás columnas se conservan). Cada línea se compara con el maestro y con el histórico de uso del CECO.</div>
+    <div class="load">
+      <div><div class="lbl">Empresa</div><select id="emp"><option value="">— Selecciona —</option><option value="ASA">ASA</option><option value="INTERANDINA">INTERANDINA (IA)</option></select></div>
+      <div><div class="lbl">Archivo Excel</div><input type="file" id="file" accept=".xlsx,.xls,.xlsm,.csv"></div>
+      <div><div class="lbl">Hoja</div><select id="sheet" disabled><option>—</option></select></div>
+      <div><button id="run" class="primary" disabled>Validar</button></div>
+    </div>
+    <div id="msg" class="msg">Cargando maestro de CECOs…</div>
+    <div class="legend"><span>🟢 <b>Correcto</b>: es el último uso del CECO o la combinación se usó en los últimos 12 meses</span><span>🟡 <b>Revisar</b>: la combinación existe en el histórico pero sin uso en los últimos 12 meses, o el CECO no tiene histórico</span><span>🔴 <b>Error</b>: combinación nunca usada, o CECO inexistente, inactivo o de Planillas</span></div>
+  </div>
+</section>
+
+<section id="res" class="panel card hidden">
+  <div class="head">2. Resultado</div>
+  <div class="body">
+    <div class="tiles">
+      <div class="tile"><div class="lbl">Líneas validadas</div><div class="n" id="tTot">0</div><div class="p" id="tFile"></div></div>
+      <div class="tile ok"><div class="lbl">🟢 Correctos</div><div class="n" id="tOk">0</div><div class="p" id="pOk"></div></div>
+      <div class="tile rv"><div class="lbl">🟡 Revisar</div><div class="n" id="tRv">0</div><div class="p" id="pRv"></div></div>
+      <div class="tile er"><div class="lbl">🔴 Errores</div><div class="n" id="tEr">0</div><div class="p" id="pEr"></div></div>
+    </div>
+    <div class="bar">
+      <button class="tab active" data-f="">Todos</button><button class="tab" data-f="CORRECTO">🟢 Correctos</button><button class="tab" data-f="REVISAR">🟡 Revisar</button><button class="tab" data-f="ERROR">🔴 Errores</button>
+      <span class="sp"></span><input id="q" placeholder="🔎 Filtrar por CECO, partida, rubro u observación…"><button id="xls" class="light">⬇ Descargar Excel</button>
+    </div>
+    <div class="scroll"><table class="table"><thead><tr><th>Fila</th><th>IDCCOSTO</th><th>Descripción CECO</th><th>Partida cargada</th><th>Rubro cargado</th><th>Validación</th><th>Observación</th><th>Partida sugerida</th><th>Rubro sugerido</th><th>Área</th><th>Fundo</th><th>Cultivo</th></tr></thead><tbody id="tb"></tbody></table></div>
+    <div id="note" class="note"></div>
+  </div>
+</section>
+</div>
+
+<script>
+let DATA=[],HIST={},RSET=new Set(),BYCODE={},WB=null,FILENAME='',ROWS=[],HEAD=[],RES=[],FILTER='';
+const $=x=>document.getElementById(x),N=s=>String(s??'').trim().toUpperCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/\s+/g,' '),E=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const val=(o,...n)=>{for(const k of n)if(Object.prototype.hasOwnProperty.call(o,k))return String(o[k]??'').trim();return''};
+const NOW=new Date();NOW.setHours(0,0,0,0);const OLD=new Date();OLD.setFullYear(OLD.getFullYear()-1);
+function st(r){if(!r.fin)return'ACTIVO';return new Date(r.fin+'T23:59:59')>=NOW?'ACTIVO':'INACTIVO'}
+function fmt(x){let a=String(x||'').split('-');return a.length===3?a[2]+'/'+a[1]+'/'+a[0]:(x||'')}
+function hist(org,code){return(HIST[org]||{})[String(code||'').trim().toUpperCase()]||[]}
+function rinfo(org,rub){let c=String(rub||'').trim().split(/\s+/)[0];return((HIST.rubros||{})[org]||{})[c]||['','','']}
+
+async function init(){
+  try{
+    const r1=await fetch('./cecos.json?ts='+Date.now(),{cache:'no-store'});if(!r1.ok)throw new Error('cecos.json HTTP '+r1.status);
+    const raw=await r1.json();
+    DATA=(raw.cecos||[]).map(x=>({origen:val(x,'Origen','origen'),jerarquia:val(x,'Jerarquia','jerarquia'),codigo:val(x,'Codigo','codigo'),descripcion:val(x,'Descripcion','descripcion'),fin:val(x,'Fecha_Fin','fecha_fin','FECHA_FIN')}));
+    RSET=new Set((raw.uso_planillas||[]).map(x=>N(val(x,'Codigo','codigo'))+'|'+N(val(x,'Jerarquia','jerarquia'))));
+    DATA.forEach(r=>{let k=r.origen+'|'+N(r.codigo);(BYCODE[k]=BYCODE[k]||[]).push(r)});
+    const r2=await fetch('./historico.json?ts='+Date.now(),{cache:'no-store'});if(!r2.ok)throw new Error('historico.json HTTP '+r2.status);
+    HIST=await r2.json();
+    $('msg').innerHTML=`Maestro cargado: <b>${DATA.length.toLocaleString('es-PE')}</b> CECOs · Histórico al ${fmt(HIST.generado)}. Selecciona la empresa y el archivo.`;
+  }catch(e){$('msg').className='msg error';$('msg').textContent='No se pudo cargar la información base: '+e.message}
+}
+function ready(){ $('run').disabled=!($('emp').value&&WB&&$('sheet').value&&DATA.length) }
+
+$('file').onchange=async e=>{
+  const f=e.target.files[0];WB=null;ready();if(!f)return;FILENAME=f.name;
+  try{
+    const buf=await f.arrayBuffer();WB=XLSX.read(buf,{type:'array',cellDates:true});
+    $('sheet').innerHTML=WB.SheetNames.map(n=>`<option>${E(n)}</option>`).join('');$('sheet').disabled=WB.SheetNames.length<2;
+    $('msg').className='msg';$('msg').innerHTML=`Archivo <b>${E(f.name)}</b> leído (${WB.SheetNames.length} hoja(s)).`;
+  }catch(err){$('msg').className='msg error';$('msg').textContent='No se pudo leer el archivo: '+err.message}
+  ready();
+};
+$('emp').onchange=ready;$('sheet').onchange=ready;
+
+function findCol(head,names){const H=head.map(N);for(const n of names){const i=H.indexOf(n);if(i>=0)return i}return-1}
+
+function validate(org,code,partida,rubro){
+  const o={val:'CORRECTO',obs:'Coincide con el último uso',sp:'',sr:'',desc:''};
+  if(!String(code).trim())return{...o,val:'ERROR',obs:'Línea sin CECO'};
+  const m=BYCODE[org+'|'+N(code)];
+  if(!m)return{...o,val:'ERROR',obs:'El CECO no existe en el maestro de '+org};
+  const c=m[0];o.desc=c.descripcion;
+  const errs=[];
+  if(st(c)==='INACTIVO')errs.push('CECO inactivo (baja '+fmt(c.fin)+')');
+  if(m.some(x=>RSET.has(N(x.codigo)+'|'+N(x.jerarquia))))errs.push('CECO de uso exclusivo de Planillas');
+  const h=hist(org,code);
+  if(!h.length){
+    if(errs.length)return{...o,val:'ERROR',obs:errs.join(' · ')};
+    return{...o,val:'REVISAR',obs:'CECO sin histórico: no se puede validar la partida y el rubro'};
+  }
+  const i=h.findIndex(x=>N(x[0])===N(partida)&&N(x[1])===N(rubro));
+  let v,obs;
+  if(i===0){v='CORRECTO';obs='Coincide con el último uso ('+fmt(h[0][2])+')'}
+  else if(i>0&&new Date(h[i][2])>=OLD){v='CORRECTO';obs='Combinación usada en los últimos 12 meses (último: '+fmt(h[i][2])+')'}
+  else if(i>0){v='REVISAR';obs='Combinación sin uso en los últimos 12 meses (último: '+fmt(h[i][2])+')'}
+  else if(h.some(x=>N(x[1])===N(rubro))){v='ERROR';obs='La partida nunca se usó con este CECO (el rubro sí)'}
+  else{v='ERROR';obs='El rubro nunca se usó con este CECO'}
+  if(errs.length){v='ERROR';obs=errs.join(' · ')+' · '+obs}
+  if(v!=='CORRECTO'){o.sp=h[0][0];o.sr=h[0][1]}
+  return{...o,val:v,obs};
+}
+
+$('run').onclick=()=>{
+  const org=$('emp').value,ws=WB.Sheets[$('sheet').value];
+  const aoa=XLSX.utils.sheet_to_json(ws,{header:1,raw:true,defval:''});
+  let hi=aoa.findIndex(r=>r.some(c=>N(c)==='IDCCOSTO'||N(c)==='CECO'));
+  if(hi<0){$('msg').className='msg error';$('msg').textContent='No encontré la columna IDCCOSTO en la hoja seleccionada.';return}
+  HEAD=aoa[hi].map(x=>String(x??'').trim());
+  const ic=findCol(HEAD,['IDCCOSTO','CECO','COD_CECO','CODIGO CECO']),ip=findCol(HEAD,['PARTIDA']),ir=findCol(HEAD,['RUBRO']),id=findCol(HEAD,['CCOSTO','DESCRIPCION CECO']);
+  const miss=[ip<0?'PARTIDA':'',ir<0?'RUBRO':''].filter(Boolean);
+  if(miss.length){$('msg').className='msg error';$('msg').textContent='Faltan columnas: '+miss.join(', ');return}
+  ROWS=aoa.slice(hi+1).map((r,k)=>({n:hi+k+2,r})).filter(x=>x.r.some(c=>String(c).trim()!==''));
+  RES=ROWS.map(x=>{const code=String(x.r[ic]??'').trim(),p=String(x.r[ip]??'').trim(),rb=String(x.r[ir]??'').trim(),v=validate(org,code,p,rb),ri=rinfo(org,rb);
+    return{fila:x.n,code,desc:id>=0?String(x.r[id]??''):v.desc,p,rb,...v,area:ri[0],fundo:ri[1],cultivo:ri[2],orig:x.r}});
+  const c=k=>RES.filter(x=>x.val===k).length,t=RES.length,pc=n=>t?(n*100/t).toFixed(1)+'%':'';
+  $('tTot').textContent=t.toLocaleString('es-PE');$('tFile').textContent=FILENAME+' · '+org;
+  [['Ok','CORRECTO'],['Rv','REVISAR'],['Er','ERROR']].forEach(([a,k])=>{let n=c(k);$('t'+a).textContent=n.toLocaleString('es-PE');$('p'+a).textContent=pc(n)});
+  $('msg').className='msg';$('msg').innerHTML=`Validación completa: <b>${t.toLocaleString('es-PE')}</b> líneas de <b>${E(FILENAME)}</b>.`;
+  $('res').classList.remove('hidden');FILTER='';document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.f===''));$('q').value='';render();
+};
+function view(){const q=N($('q').value);return RES.filter(x=>(!FILTER||x.val===FILTER)&&(!q||N([x.code,x.desc,x.p,x.rb,x.obs,x.area].join(' ')).includes(q)))}
+function render(){
+  const v=view(),LIM=3000,cls={CORRECTO:'ok',REVISAR:'rv',ERROR:'er'},lbl={CORRECTO:'🟢 Correcto',REVISAR:'🟡 Revisar',ERROR:'🔴 Error'};
+  $('tb').innerHTML=v.length?v.slice(0,LIM).map(x=>`<tr><td class="muted">${x.fila}</td><td><b>${E(x.code)}</b></td><td>${E(x.desc)}</td><td>${E(x.p)}</td><td>${E(x.rb)}</td><td><span class="st s-${cls[x.val]}">${lbl[x.val]}</span></td><td>${E(x.obs)}</td><td class="sug">${E(x.sp)}</td><td class="sug">${E(x.sr)}</td><td>${E(x.area)}</td><td>${E(x.fundo)}</td><td>${E(x.cultivo)}</td></tr>`).join(''):'<tr><td colspan="12" class="muted">No hay líneas en esta vista.</td></tr>';
+  $('note').textContent=v.length>LIM?`Mostrando ${LIM.toLocaleString('es-PE')} de ${v.length.toLocaleString('es-PE')} líneas. El Excel descargado incluye todas.`:'';
+}
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{FILTER=b.dataset.f;document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));render()});
+$('q').oninput=render;
+$('xls').onclick=()=>{
+  const extra=['VALIDACION','OBSERVACION','PARTIDA_SUGERIDA','RUBRO_SUGERIDO','AREA','FUNDO','CULTIVO'];
+  const rows=[[...HEAD,...extra],...RES.map(x=>{const o=HEAD.map((_,i)=>x.orig[i]??'');return[...o,x.val,x.obs,x.sp,x.sr,x.area,x.fundo,x.cultivo]})];
+  const ws=XLSX.utils.aoa_to_sheet(rows,{cellDates:true});ws['!autofilter']={ref:ws['!ref']};
+  const res=[['Archivo',FILENAME],['Empresa',$('emp').value],['Fecha validación',new Date().toLocaleString('es-PE')],[],['Resultado','Líneas'],['CORRECTO',RES.filter(x=>x.val==='CORRECTO').length],['REVISAR',RES.filter(x=>x.val==='REVISAR').length],['ERROR',RES.filter(x=>x.val==='ERROR').length],['TOTAL',RES.length]];
+  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Validacion');XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(res),'Resumen');
+  XLSX.writeFile(wb,FILENAME.replace(/\.[^.]+$/,'')+'_validado.xlsx');
+};
+init();
+</script>
+</body></html>
