@@ -9,7 +9,7 @@
 *{box-sizing:border-box}body{margin:0;background:var(--bg);font:14px Segoe UI,Arial,sans-serif;color:var(--tx)}.app{max-width:1450px;margin:auto;padding:16px}.card{background:#fff;border:1px solid var(--ln);border-radius:14px}
 .top{padding:14px 18px;border-left:7px solid var(--g);display:flex;justify-content:space-between;align-items:center;gap:14px}.brand{display:flex;gap:12px;align-items:center}.logo{background:var(--b);color:#fff;padding:12px;border-radius:10px;font-weight:900}.ey{font-size:11px;color:var(--g);font-weight:900}.brand h1{margin:2px 0;color:var(--bd);font-size:21px}.navbtn{background:#edf2f7;color:var(--tx);text-decoration:none;padding:9px 12px;border-radius:8px;font-weight:800;white-space:nowrap}
 .panel{margin-top:12px;overflow:hidden}.head{padding:11px 14px;background:var(--sf);border-bottom:1px solid var(--ln);font-weight:900;color:var(--bd)}.body{padding:14px}.intro{color:var(--mu);font-size:12px;margin-bottom:10px}
-.grid{display:grid;grid-template-columns:minmax(300px,34%) 1fr;gap:12px}.left textarea{width:100%;min-height:260px;resize:vertical;border:1px solid var(--ln);border-radius:10px;padding:11px;font:13px Consolas,"Segoe UI",monospace;color:var(--tx);background:#fff}
+.grid{display:grid;grid-template-columns:minmax(300px,34%) minmax(0,1fr);gap:12px}.grid>div{min-width:0}.left textarea{width:100%;min-height:260px;resize:vertical;border:1px solid var(--ln);border-radius:10px;padding:11px;font:13px Consolas,"Segoe UI",monospace;color:var(--tx);background:#fff}
 .actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}button{border:0;border-radius:8px;padding:9px 12px;font-weight:800;cursor:pointer}.primary{background:var(--b);color:#fff}.light{background:#edf2f7;color:var(--tx)}button:disabled{opacity:.5;cursor:not-allowed}
 .summary{font-size:12px;color:var(--mu);margin:0 0 8px}.summary b{color:var(--tx)}.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px}.tab{background:#edf2f7;color:var(--tx);padding:7px 10px;border-radius:999px;font-size:12px}.tab.active{background:var(--b);color:#fff}.tab .n{font-weight:900}.table th.sortable{cursor:pointer;user-select:none}.table th.sortable:hover{background:var(--bd)}.sortmark{font-size:10px;opacity:.85;margin-left:4px}.scroll{overflow:auto;border:1px solid var(--ln);border-radius:10px;max-height:560px}.table{width:100%;border-collapse:collapse;min-width:1600px;font-size:12px}.table th{position:sticky;top:0;background:var(--b);color:#fff;padding:8px;text-align:left;z-index:1}.table td{padding:8px;border-bottom:1px solid #edf2f7;vertical-align:top}.table tr:hover td{background:#f8fbfe}.notfound td{background:#fff4f2;color:var(--r);font-weight:700}.dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex:0 0 9px}.active{background:var(--g)}.inactive{background:var(--r)}.status{display:inline-flex;align-items:center;gap:5px;font-weight:900}.plan{color:var(--yt);font-weight:900}.muted{color:var(--mu)}.loader{padding:50px;text-align:center;color:var(--mu);font-weight:700}.error{color:var(--r)}
 @media(max-width:900px){.grid{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}}
@@ -42,7 +42,6 @@
           <button id="massSearch" class="primary" disabled>Consultar</button>
           <button id="massClear" class="light">Limpiar lista</button>
           <button id="massCopy" class="light" disabled>📋 Copiar resultados</button>
-          <button id="massCsv" class="light" disabled>⬇ Descargar Excel</button>
         </div>
       </div>
       <div>
@@ -53,6 +52,7 @@
           <button class="tab" data-filter="INACTIVO">Inactivos <span class="n" id="nInactivos">0</span></button>
           <button class="tab" data-filter="PLANILLAS">⚠ Planillas <span class="n" id="nPlanillas">0</span></button>
           <button class="tab" data-filter="NO_ENCONTRADO">No encontrados <span class="n" id="nNoEncontrados">0</span></button>
+          <span style="flex:1"></span><button id="massCsv" class="primary" disabled>⬇ Descargar Excel</button>
         </div>
         <div class="scroll">
           <table class="table">

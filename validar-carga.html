@@ -12,7 +12,7 @@ input,select{width:100%;border:1px solid var(--ln);border-radius:8px;padding:9px
 .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px}.tile{padding:12px 14px;border-radius:12px;border:1px solid var(--ln);background:#fff}.tile .n{font-size:24px;font-weight:900;margin-top:3px}.tile.ok .n{color:var(--g)}.tile.rv .n{color:var(--yt)}.tile.er .n{color:var(--r)}.tile .p{font-size:11px;color:var(--mu)}
 .bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:12px 0 10px}.tab{background:#edf2f7;color:var(--tx);padding:7px 11px;border-radius:999px;font-size:12px}.tab.active{background:var(--b);color:#fff}.bar .sp{flex:1}.bar input{width:280px}
 .scroll{overflow:auto;border:1px solid var(--ln);border-radius:10px;max-height:620px}.table{width:100%;border-collapse:collapse;min-width:1700px;font-size:12px}.table th{position:sticky;top:0;background:var(--b);color:#fff;padding:8px;text-align:left;z-index:1;white-space:nowrap}.table td{padding:7px 8px;border-bottom:1px solid #edf2f7;vertical-align:top}.table tr:hover td{background:#f8fbfe}
-.st{display:inline-flex;align-items:center;gap:5px;font-weight:900;white-space:nowrap}.dot{width:9px;height:9px;border-radius:50%;display:inline-block}.d-ok{background:var(--g)}.d-rv{background:var(--y)}.d-er{background:var(--r)}.s-ok{color:var(--g)}.s-rv{color:var(--yt)}.s-er{color:var(--r)}.sug{color:var(--b);font-weight:700}.muted{color:var(--mu)}.note{font-size:11px;color:var(--mu);margin-top:8px}.hidden{display:none}
+.st{display:inline-flex;align-items:center;gap:5px;font-weight:900;white-space:nowrap}.dot{width:9px;height:9px;border-radius:50%;display:inline-block}.d-ok{background:var(--g)}.d-rv{background:var(--y)}.d-er{background:var(--r)}.s-ok{color:var(--g)}.s-rv{color:var(--yt)}.s-er{color:var(--r)}.sug{color:var(--b);font-weight:700}.muted{color:var(--mu)}.note{font-size:11px;color:var(--mu);margin-top:8px}.hidden{display:none}.table th.sortable{cursor:pointer;user-select:none}.table th.sortable:hover{background:var(--bd)}.sm{font-size:10px;opacity:.85}
 .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--mu);margin-top:10px}.legend b{color:var(--tx)}
 @media(max-width:900px){.load{grid-template-columns:1fr}.tiles{grid-template-columns:1fr 1fr}.top{flex-direction:column;align-items:flex-start}}
 </style>
@@ -60,14 +60,14 @@ input,select{width:100%;border:1px solid var(--ln);border-radius:8px;padding:9px
       <button class="tab active" data-f="">Todos</button><button class="tab" data-f="CORRECTO">🟢 Correctos</button><button class="tab" data-f="REVISAR">🟡 Revisar</button><button class="tab" data-f="ERROR">🔴 Errores</button>
       <span class="sp"></span><input id="q" placeholder="🔎 Filtrar por CECO, partida, rubro u observación…"><button id="xls" class="light">⬇ Descargar Excel</button>
     </div>
-    <div class="scroll"><table class="table"><thead><tr><th>Fila</th><th>IDCCOSTO</th><th>Descripción CECO</th><th>Partida cargada</th><th>Rubro cargado</th><th>Validación</th><th>Observación</th><th>Partida sugerida</th><th>Rubro sugerido</th><th>Área</th><th>Fundo</th><th>Cultivo</th></tr></thead><tbody id="tb"></tbody></table></div>
+    <div class="scroll"><table class="table"><thead><tr><th class="sortable" data-k="fila">Fila <span class="sm">↕</span></th><th class="sortable" data-k="code">IDCCOSTO <span class="sm">↕</span></th><th class="sortable" data-k="desc">Descripción CECO <span class="sm">↕</span></th><th class="sortable" data-k="p">Partida cargada <span class="sm">↕</span></th><th class="sortable" data-k="rb">Rubro cargado <span class="sm">↕</span></th><th class="sortable" data-k="val">Validación <span class="sm">↕</span></th><th class="sortable" data-k="obs">Observación <span class="sm">↕</span></th><th class="sortable" data-k="sp">Partida sugerida <span class="sm">↕</span></th><th class="sortable" data-k="sr">Rubro sugerido <span class="sm">↕</span></th><th class="sortable" data-k="area">Área <span class="sm">↕</span></th><th class="sortable" data-k="fundo">Fundo <span class="sm">↕</span></th><th class="sortable" data-k="cultivo">Cultivo <span class="sm">↕</span></th></tr></thead><tbody id="tb"></tbody></table></div>
     <div id="note" class="note"></div>
   </div>
 </section>
 </div>
 
 <script>
-let DATA=[],HIST={},RSET=new Set(),BYCODE={},WB=null,FILENAME='',ROWS=[],HEAD=[],RES=[],FILTER='';
+let SK='',SD=1,DATA=[],HIST={},RSET=new Set(),BYCODE={},WB=null,FILENAME='',ROWS=[],HEAD=[],RES=[],FILTER='';
 const $=x=>document.getElementById(x),N=s=>String(s??'').trim().toUpperCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/\s+/g,' '),E=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const val=(o,...n)=>{for(const k of n)if(Object.prototype.hasOwnProperty.call(o,k))return String(o[k]??'').trim();return''};
 const NOW=new Date();NOW.setHours(0,0,0,0);const OLD=new Date();OLD.setFullYear(OLD.getFullYear()-1);
@@ -145,9 +145,11 @@ $('run').onclick=()=>{
   $('tTot').textContent=t.toLocaleString('es-PE');$('tFile').textContent=FILENAME+' · '+org;
   [['Ok','CORRECTO'],['Rv','REVISAR'],['Er','ERROR']].forEach(([a,k])=>{let n=c(k);$('t'+a).textContent=n.toLocaleString('es-PE');$('p'+a).textContent=pc(n)});
   $('msg').className='msg';$('msg').innerHTML=`Validación completa: <b>${t.toLocaleString('es-PE')}</b> líneas de <b>${E(FILENAME)}</b>.`;
-  $('res').classList.remove('hidden');FILTER='';document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.f===''));$('q').value='';render();
+  $('res').classList.remove('hidden');FILTER='';SK='';SD=1;document.querySelectorAll('.sm').forEach(x=>x.textContent='↕');document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.f===''));$('q').value='';render();
 };
-function view(){const q=N($('q').value);return RES.filter(x=>(!FILTER||x.val===FILTER)&&(!q||N([x.code,x.desc,x.p,x.rb,x.obs,x.area].join(' ')).includes(q)))}
+function view(){const q=N($('q').value),RK={CORRECTO:1,REVISAR:2,ERROR:3};let v=RES.filter(x=>(!FILTER||x.val===FILTER)&&(!q||N([x.code,x.desc,x.p,x.rb,x.obs,x.area].join(' ')).includes(q)));
+ if(SK){v=[...v].sort((a,b)=>{let x=a[SK],y=b[SK];if(SK==='fila'){x=+x;y=+y}else if(SK==='val'){x=RK[x];y=RK[y]}else{x=N(x);y=N(y)}return x<y?-SD:x>y?SD:0})}
+ return v}
 function render(){
   const v=view(),LIM=3000,cls={CORRECTO:'ok',REVISAR:'rv',ERROR:'er'},lbl={CORRECTO:'🟢 Correcto',REVISAR:'🟡 Revisar',ERROR:'🔴 Error'};
   $('tb').innerHTML=v.length?v.slice(0,LIM).map(x=>`<tr><td class="muted">${x.fila}</td><td><b>${E(x.code)}</b></td><td>${E(x.desc)}</td><td>${E(x.p)}</td><td>${E(x.rb)}</td><td><span class="st s-${cls[x.val]}">${lbl[x.val]}</span></td><td>${E(x.obs)}</td><td class="sug">${E(x.sp)}</td><td class="sug">${E(x.sr)}</td><td>${E(x.area)}</td><td>${E(x.fundo)}</td><td>${E(x.cultivo)}</td></tr>`).join(''):'<tr><td colspan="12" class="muted">No hay líneas en esta vista.</td></tr>';
@@ -155,6 +157,7 @@ function render(){
 }
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{FILTER=b.dataset.f;document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x===b));render()});
 $('q').oninput=render;
+document.querySelectorAll('th.sortable').forEach(th=>th.onclick=()=>{const k=th.dataset.k;if(SK===k)SD*=-1;else{SK=k;SD=1}document.querySelectorAll('.sm').forEach(x=>x.textContent='↕');th.querySelector('.sm').textContent=SD===1?'↑':'↓';render()});
 $('xls').onclick=()=>{
   const extra=['VALIDACION','OBSERVACION','PARTIDA_SUGERIDA','RUBRO_SUGERIDO','AREA','FUNDO','CULTIVO'];
   const rows=[[...HEAD,...extra],...RES.map(x=>{const o=HEAD.map((_,i)=>x.orig[i]??'');return[...o,x.val,x.obs,x.sp,x.sr,x.area,x.fundo,x.cultivo]})];
