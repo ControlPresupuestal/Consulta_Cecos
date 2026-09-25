@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="es" xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ASA | IA · CECOs por área</title>
+<style>
+:root{--b:#174a8b;--bd:#0f376d;--g:#247a43;--r:#8b1e1e;--bg:#f5f8fc;--ln:#d7e1ec;--tx:#18324f;--mu:#6b7f95;--sf:#edf4fb}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font:14px Segoe UI,Arial,sans-serif;color:var(--tx)}.app{max-width:1600px;margin:auto;padding:16px}.card{background:#fff;border:1px solid var(--ln);border-radius:14px}
+.top{padding:14px 18px;border-left:7px solid var(--g);display:flex;justify-content:space-between;align-items:center;gap:14px}.brand{display:flex;gap:12px;align-items:center}.logo{background:var(--b);color:#fff;padding:12px;border-radius:10px;font-weight:900}.ey{font-size:11px;color:var(--g);font-weight:900}.brand h1{margin:2px 0;color:var(--bd);font-size:21px}.nav{display:flex;gap:8px;flex-wrap:wrap}.navbtn{background:#edf2f7;color:var(--tx);text-decoration:none;padding:9px 12px;border-radius:8px;font-weight:800;white-space:nowrap}
+.filters{margin-top:12px;padding:12px;display:grid;grid-template-columns:repeat(5,1fr) 1.6fr auto;gap:8px;align-items:end}.lbl{font-size:10px;color:var(--mu);font-weight:900;text-transform:uppercase;margin-bottom:5px}
+input,select{width:100%;border:1px solid var(--ln);border-radius:8px;padding:9px;background:#fff;color:var(--tx);font:inherit}button{border:0;border-radius:8px;padding:10px 14px;cursor:pointer;font:inherit;font-weight:800}.primary{background:var(--b);color:#fff}.light{background:#edf2f7;color:var(--tx)}button:disabled{opacity:.5;cursor:not-allowed}
+.bar{margin-top:10px;padding:10px 12px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;font-size:12px;color:var(--mu)}.bar b{color:var(--tx)}.bar .sp{flex:1}
+.panel{margin-top:10px;overflow:hidden}.scroll{overflow:auto;max-height:680px}.table{width:100%;border-collapse:collapse;min-width:1500px;font-size:12px}.table th{position:sticky;top:0;background:var(--b);color:#fff;padding:8px;text-align:left;z-index:1;white-space:nowrap;cursor:pointer;user-select:none}.table th:hover{background:var(--bd)}.sm{font-size:10px;opacity:.85}.table td{padding:7px 8px;border-bottom:1px solid #edf2f7;vertical-align:top}.table tr:hover td{background:#f8fbfe}
+.st{display:inline-flex;align-items:center;gap:5px;font-weight:900;white-space:nowrap}.dot{width:9px;height:9px;border-radius:50%;display:inline-block}.active{background:var(--g)}.inactive{background:var(--r)}.muted{color:var(--mu)}.empty{padding:40px;text-align:center;color:var(--mu)}.error{color:var(--r);font-weight:700}
+@media(max-width:1000px){.filters{grid-template-columns:1fr 1fr}.top{flex-direction:column;align-items:flex-start}}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+<!--[if gte mso 9]><xml>
+<mso:CustomDocumentProperties>
+<mso:_dlc_DocId msdt:dt="string">UT5DNZMK4W5E-800651695-1218852</mso:_dlc_DocId>
+<mso:_dlc_DocIdItemGuid msdt:dt="string">2b7a453b-e711-4797-b4ae-20ec3fafff92</mso:_dlc_DocIdItemGuid>
+<mso:_dlc_DocIdUrl msdt:dt="string">https://agsantaazulperu.sharepoint.com/sites/FS-ASA/_layouts/15/DocIdRedir.aspx?ID=UT5DNZMK4W5E-800651695-1218852, UT5DNZMK4W5E-800651695-1218852</mso:_dlc_DocIdUrl>
+</mso:CustomDocumentProperties>
+</xml><![endif]-->
+</head><body>
+<div class="app">
+<header class="top card">
+  <div class="brand"><div class="logo">ASA | IA</div><div><div class="ey">MAESTRO DE CENTROS DE COSTO</div><h1>CECOs por fundo, área y cultivo</h1></div></div>
+  <div class="nav"><a class="navbtn" href="index.html">← Consulta individual</a><a class="navbtn" href="consulta-masiva.html">Consulta masiva</a><a class="navbtn" href="validar-carga.html">Validar carga</a></div>
+</header>
+
+<section class="filters card">
+  <div><div class="lbl">Empresa</div><select id="fEmp"><option value="">Todas</option></select></div>
+  <div><div class="lbl">Fundo</div><select id="fFun"><option value="">Todos</option></select></div>
+  <div><div class="lbl">Área</div><select id="fAre"><option value="">Todas</option></select></div>
+  <div><div class="lbl">Cultivo</div><select id="fCul"><option value="">Todos</option></select></div>
+  <div><div class="lbl">Estado CECO</div><select id="fEst"><option value="ACTIVO">Activos</option><option value="INACTIVO">Inactivos</option><option value="">Todos</option></select></div>
+  <div><div class="lbl">Buscar</div><input id="q" placeholder="🔎 Código, descripción, partida o rubro…"></div>
+  <div><button id="clear" class="light">Limpiar</button></div>
+</section>
+
+<div class="bar card"><span id="sum">Cargando información…</span><span class="sp"></span><button id="xls" class="primary" disabled>⬇ Descargar Excel</button></div>
+
+<section class="panel card">
+  <div class="scroll"><table class="table"><thead><tr>
+    <th data-k="codigo">Código <span class="sm">↕</span></th><th data-k="descripcion">Descripción <span class="sm">↕</span></th><th data-k="estado">Estado <span class="sm">↕</span></th><th data-k="empresa">Empresa <span class="sm">↕</span></th>
+    <th data-k="partida">Partida (último uso) <span class="sm">↕</span></th><th data-k="rubro">Rubro (último uso) <span class="sm">↕</span></th><th data-k="area">Área <span class="sm">↕</span></th><th data-k="fundo">Fundo <span class="sm">↕</span></th><th data-k="cultivo">Cultivo <span class="sm">↕</span></th><th data-k="fecha">Último uso <span class="sm">↕</span></th>
+  </tr></thead><tbody id="tb"><tr><td colspan="10" class="empty">Cargando…</td></tr></tbody></table></div>
+</section>
+<div class="muted" style="font-size:11px;margin-top:8px">Área, fundo y cultivo según la hoja RUBRO de CECOS_Historico. No se muestran los CECOs cuyo último rubro tiene FILTRO = NO ni los CECOs sin histórico.</div>
+</div>
+
+<script>
+let ROWS=[],SK='area',SD=1,HIDDEN=0;
+const $=x=>document.getElementById(x),N=s=>String(s??'').trim().toUpperCase().normalize('NFD').replace(/[̀-ͯ]/g,''),E=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const val=(o,...n)=>{for(const k of n)if(Object.prototype.hasOwnProperty.call(o,k))return String(o[k]??'').trim();return''};
+const NOW=new Date();NOW.setHours(0,0,0,0);
+function st(fin){if(!fin)return'ACTIVO';return new Date(fin+'T23:59:59')>=NOW?'ACTIVO':'INACTIVO'}
+function fmt(x){let a=String(x||'').split('-');return a.length===3?a[2]+'/'+a[1]+'/'+a[0]:(x||'')}
+
+async function init(){
+ try{
+  const [r1,r2]=await Promise.all([fetch('./cecos.json?ts='+Date.now(),{cache:'no-store'}),fetch('./historico.json?ts='+Date.now(),{cache:'no-store'})]);
+  if(!r1.ok||!r2.ok)throw new Error('no se pudieron leer cecos.json / historico.json');
+  const raw=await r1.json(),H=await r2.json(),RF=H.rubros_filtro||{},seen=new Set();
+  (raw.cecos||[]).forEach(x=>{
+    const org=val(x,'Origen','origen'),code=val(x,'Codigo','codigo'),key=org+'|'+code.toUpperCase();
+    if(seen.has(key))return;seen.add(key);
+    const h=(H[org]||{})[code.toUpperCase()];if(!h||!h.length)return;
+    const l=h[0],cod=String(l[1]).split(/\s+/)[0],m=(RF[org]||{})[cod];
+    if(!m){return}
+    if(m[3]==='NO'){HIDDEN++;return}
+    ROWS.push({codigo:code,descripcion:val(x,'Descripcion','descripcion'),estado:st(val(x,'Fecha_Fin','fecha_fin')),empresa:org,partida:l[0],rubro:l[1],fundo:m[0],cultivo:m[1],area:m[2],fecha:l[2]});
+  });
+  fillOptions();render();$('xls').disabled=false;
+ }catch(e){$('sum').innerHTML='<span class="error">Error: '+E(e.message)+'</span>';$('tb').innerHTML='<tr><td colspan="10" class="empty error">No se pudo cargar la información.</td></tr>'}
+}
+const F=[['fEmp','empresa','Todas'],['fFun','fundo','Todos'],['fAre','area','Todas'],['fCul','cultivo','Todos']];
+function base(skip){const q=N($('q').value),e=$('fEst').value;return ROWS.filter(r=>(!e||r.estado===e)&&F.every(([id,k])=>id===skip||!$(id).value||r[k]===$(id).value)&&(!q||N(r.codigo+' '+r.descripcion+' '+r.partida+' '+r.rubro).includes(q)))}
+function fillOptions(){F.forEach(([id,k,all])=>{const cur=$(id).value,opts=[...new Set(base(id).map(r=>r[k]).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es'));$(id).innerHTML=`<option value="">${all}</option>`+opts.map(o=>`<option${o===cur?' selected':''}>${E(o)}</option>`).join('');if(cur&&!opts.includes(cur))$(id).value=''})}
+function view(){let v=base('');return v.sort((a,b)=>{let x=N(a[SK]),y=N(b[SK]);return x<y?-SD:x>y?SD:(N(a.codigo)<N(b.codigo)?-1:1)})}
+function render(){
+  const v=view(),LIM=3000;
+  $('tb').innerHTML=v.length?v.slice(0,LIM).map(r=>`<tr><td><b>${E(r.codigo)}</b></td><td>${E(r.descripcion)}</td><td><span class="st"><span class="dot ${r.estado==='ACTIVO'?'active':'inactive'}"></span>${r.estado}</span></td><td>${E(r.empresa)}</td><td>${E(r.partida)}</td><td>${E(r.rubro)}</td><td>${E(r.area)}</td><td>${E(r.fundo)}</td><td>${E(r.cultivo)}</td><td style="white-space:nowrap">${fmt(r.fecha)}</td></tr>`).join(''):'<tr><td colspan="10" class="empty">No hay CECOs con esos filtros.</td></tr>';
+  $('sum').innerHTML=`<b>${v.length.toLocaleString('es-PE')}</b> CECOs${v.length>LIM?` (mostrando ${LIM.toLocaleString('es-PE')}; el Excel incluye todos)`:''} · <b>${new Set(v.map(r=>r.partida)).size.toLocaleString('es-PE')}</b> partidas · <b>${new Set(v.map(r=>r.rubro)).size}</b> rubros · <span class="muted">${HIDDEN.toLocaleString('es-PE')} CECOs ocultos por FILTRO = NO</span>`;
+}
+function onFilter(){fillOptions();render()}
+['fEmp','fFun','fAre','fCul','fEst'].forEach(id=>$(id).onchange=onFilter);$('q').oninput=onFilter;
+$('clear').onclick=()=>{F.forEach(([id])=>$(id).value='');$('fEst').value='ACTIVO';$('q').value='';onFilter()};
+document.querySelectorAll('th[data-k]').forEach(th=>th.onclick=()=>{const k=th.dataset.k;if(SK===k)SD*=-1;else{SK=k;SD=1}document.querySelectorAll('.sm').forEach(x=>x.textContent='↕');th.querySelector('.sm').textContent=SD===1?'↑':'↓';render()});
+$('xls').onclick=()=>{
+  const rows=[['CODIGO','DESCRIPCION','ESTADO','EMPRESA','PARTIDA_ULTIMO_USO','RUBRO_ULTIMO_USO','AREA','FUNDO','CULTIVO','FECHA_ULTIMO_USO'],...view().map(r=>[r.codigo,r.descripcion,r.estado,r.empresa,r.partida,r.rubro,r.area,r.fundo,r.cultivo,fmt(r.fecha)])];
+  const ws=XLSX.utils.aoa_to_sheet(rows);ws['!cols']=[14,45,10,13,50,40,24,12,12,14].map(w=>({wch:w}));ws['!autofilter']={ref:ws['!ref']};
+  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'CECOs');XLSX.writeFile(wb,'CECOs_por_area.xlsx');
+};
+init();
+</script>
+</body></html>
