@@ -7,7 +7,7 @@
 .top{padding:14px 18px;border-left:7px solid var(--g);display:flex;justify-content:space-between;align-items:center;gap:14px}.brand{display:flex;gap:12px;align-items:center}.logo{background:var(--b);color:#fff;padding:12px;border-radius:10px;font-weight:900}.ey{font-size:11px;color:var(--g);font-weight:900}.brand h1{margin:2px 0;color:var(--bd);font-size:21px}.nav{display:flex;gap:8px;flex-wrap:wrap}.navbtn{background:#edf2f7;color:var(--tx);text-decoration:none;padding:9px 12px;border-radius:8px;font-weight:800;white-space:nowrap}
 .filters{margin-top:12px;padding:12px;display:grid;grid-template-columns:repeat(5,1fr) 1.6fr auto;gap:8px;align-items:end}.lbl{font-size:10px;color:var(--mu);font-weight:900;text-transform:uppercase;margin-bottom:5px}
 input,select{width:100%;border:1px solid var(--ln);border-radius:8px;padding:9px;background:#fff;color:var(--tx);font:inherit}button{border:0;border-radius:8px;padding:10px 14px;cursor:pointer;font:inherit;font-weight:800}.primary{background:var(--b);color:#fff}.light{background:#edf2f7;color:var(--tx)}button:disabled{opacity:.5;cursor:not-allowed}
-.bar{margin-top:10px;padding:10px 12px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;font-size:12px;color:var(--mu)}.bar b{color:var(--tx)}.bar .sp{flex:1}
+.cb{position:relative}.cb input{padding-right:28px}.cb .x{position:absolute;right:3px;top:50%;transform:translateY(-50%);background:transparent;color:var(--mu);font-size:18px;padding:2px 7px;display:none}.cb.has .x{display:block}.bar{margin-top:10px;padding:10px 12px;display:flex;gap:18px;align-items:center;flex-wrap:wrap;font-size:12px;color:var(--mu)}.bar b{color:var(--tx)}.bar .sp{flex:1}
 .panel{margin-top:10px;overflow:hidden}.scroll{overflow:auto;max-height:680px}.table{width:100%;border-collapse:collapse;min-width:1500px;font-size:12px}.table th{position:sticky;top:0;background:var(--b);color:#fff;padding:8px;text-align:left;z-index:1;white-space:nowrap;cursor:pointer;user-select:none}.table th:hover{background:var(--bd)}.sm{font-size:10px;opacity:.85}.table td{padding:7px 8px;border-bottom:1px solid #edf2f7;vertical-align:top}.table tr:hover td{background:#f8fbfe}
 .st{display:inline-flex;align-items:center;gap:5px;font-weight:900;white-space:nowrap}.dot{width:9px;height:9px;border-radius:50%;display:inline-block}.active{background:var(--g)}.inactive{background:var(--r)}.muted{color:var(--mu)}.empty{padding:40px;text-align:center;color:var(--mu)}.error{color:var(--r);font-weight:700}
 @media(max-width:1000px){.filters{grid-template-columns:1fr 1fr}.top{flex-direction:column;align-items:flex-start}}
@@ -29,10 +29,10 @@ input,select{width:100%;border:1px solid var(--ln);border-radius:8px;padding:9px
 </header>
 
 <section class="filters card">
-  <div><div class="lbl">Empresa</div><select id="fEmp"><option value="">Todas</option></select></div>
-  <div><div class="lbl">Fundo</div><select id="fFun"><option value="">Todos</option></select></div>
-  <div><div class="lbl">Área</div><select id="fAre"><option value="">Todas</option></select></div>
-  <div><div class="lbl">Cultivo</div><select id="fCul"><option value="">Todos</option></select></div>
+  <div><div class="lbl">Empresa</div><div class="cb"><input id="fEmp" list="fEmpL" placeholder="Todas (escribe o elige)" autocomplete="off"><button class="x" data-for="fEmp" title="Borrar">×</button><datalist id="fEmpL"></datalist></div></div>
+  <div><div class="lbl">Fundo</div><div class="cb"><input id="fFun" list="fFunL" placeholder="Todos (escribe o elige)" autocomplete="off"><button class="x" data-for="fFun" title="Borrar">×</button><datalist id="fFunL"></datalist></div></div>
+  <div><div class="lbl">Área</div><div class="cb"><input id="fAre" list="fAreL" placeholder="Todas (escribe o elige)" autocomplete="off"><button class="x" data-for="fAre" title="Borrar">×</button><datalist id="fAreL"></datalist></div></div>
+  <div><div class="lbl">Cultivo</div><div class="cb"><input id="fCul" list="fCulL" placeholder="Todos (escribe o elige)" autocomplete="off"><button class="x" data-for="fCul" title="Borrar">×</button><datalist id="fCulL"></datalist></div></div>
   <div><div class="lbl">Estado CECO</div><select id="fEst"><option value="ACTIVO">Activos</option><option value="INACTIVO">Inactivos</option><option value="">Todos</option></select></div>
   <div><div class="lbl">Buscar</div><input id="q" placeholder="🔎 Código, descripción, partida o rubro…"></div>
   <div><button id="clear" class="light">Limpiar</button></div>
@@ -42,9 +42,8 @@ input,select{width:100%;border:1px solid var(--ln);border-radius:8px;padding:9px
 
 <section class="panel card">
   <div class="scroll"><table class="table"><thead><tr>
-    <th data-k="codigo">Código <span class="sm">↕</span></th><th data-k="descripcion">Descripción <span class="sm">↕</span></th><th data-k="estado">Estado <span class="sm">↕</span></th><th data-k="empresa">Empresa <span class="sm">↕</span></th>
-    <th data-k="partida">Partida (último uso) <span class="sm">↕</span></th><th data-k="rubro">Rubro (último uso) <span class="sm">↕</span></th><th data-k="area">Área <span class="sm">↕</span></th><th data-k="fundo">Fundo <span class="sm">↕</span></th><th data-k="cultivo">Cultivo <span class="sm">↕</span></th><th data-k="fecha">Último uso <span class="sm">↕</span></th>
-  </tr></thead><tbody id="tb"><tr><td colspan="10" class="empty">Cargando…</td></tr></tbody></table></div>
+    <th data-k="codigo">Código <span class="sm">↕</span></th><th data-k="descripcion">Descripción <span class="sm">↕</span></th><th data-k="estado">Estado <span class="sm">↕</span></th><th data-k="empresa">Empresa <span class="sm">↕</span></th><th data-k="fundo">Fundo <span class="sm">↕</span></th><th data-k="area">Área <span class="sm">↕</span></th><th data-k="cultivo">Cultivo <span class="sm">↕</span></th><th data-k="fecha">Último uso <span class="sm">↕</span></th><th data-k="partida">Partida <span class="sm">↕</span></th><th data-k="rubro">Rubro <span class="sm">↕</span></th>
+  </tr></thead><tbody id="tb"><tr><td colspan="10" class="empty">Cargando…</td></tr></tbody></table></div><div id="more" style="padding:10px;text-align:center;display:none"><button id="moreBtn" class="light">Mostrar más</button></div>
 </section>
 <div class="muted" style="font-size:11px;margin-top:8px">Área, fundo y cultivo según la hoja RUBRO de CECOS_Historico. No se muestran los CECOs cuyo último rubro tiene FILTRO = NO ni los CECOs sin histórico.</div>
 </div>
@@ -69,27 +68,34 @@ async function init(){
     const l=h[0],cod=String(l[1]).split(/\s+/)[0],m=(RF[org]||{})[cod];
     if(!m){return}
     if(m[3]==='NO'){HIDDEN++;return}
-    ROWS.push({codigo:code,descripcion:val(x,'Descripcion','descripcion'),estado:st(val(x,'Fecha_Fin','fecha_fin')),empresa:org,partida:l[0],rubro:l[1],fundo:m[0],cultivo:m[1],area:m[2],fecha:l[2]});
+    const o={codigo:code,descripcion:val(x,'Descripcion','descripcion'),estado:st(val(x,'Fecha_Fin','fecha_fin')),empresa:org,partida:l[0],rubro:l[1],fundo:m[0],cultivo:m[1],area:m[2],fecha:l[2]};o._n={empresa:N(o.empresa),fundo:N(o.fundo),area:N(o.area),cultivo:N(o.cultivo)};o._s=N(o.codigo+' '+o.descripcion+' '+o.partida+' '+o.rubro);ROWS.push(o);
   });
-  fillOptions();render();$('xls').disabled=false;
+  fillOptions();render();
  }catch(e){$('sum').innerHTML='<span class="error">Error: '+E(e.message)+'</span>';$('tb').innerHTML='<tr><td colspan="10" class="empty error">No se pudo cargar la información.</td></tr>'}
 }
-const F=[['fEmp','empresa','Todas'],['fFun','fundo','Todos'],['fAre','area','Todas'],['fCul','cultivo','Todos']];
-function base(skip){const q=N($('q').value),e=$('fEst').value;return ROWS.filter(r=>(!e||r.estado===e)&&F.every(([id,k])=>id===skip||!$(id).value||r[k]===$(id).value)&&(!q||N(r.codigo+' '+r.descripcion+' '+r.partida+' '+r.rubro).includes(q)))}
-function fillOptions(){F.forEach(([id,k,all])=>{const cur=$(id).value,opts=[...new Set(base(id).map(r=>r[k]).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es'));$(id).innerHTML=`<option value="">${all}</option>`+opts.map(o=>`<option${o===cur?' selected':''}>${E(o)}</option>`).join('');if(cur&&!opts.includes(cur))$(id).value=''})}
-function view(){let v=base('');return v.sort((a,b)=>{let x=N(a[SK]),y=N(b[SK]);return x<y?-SD:x>y?SD:(N(a.codigo)<N(b.codigo)?-1:1)})}
+const F=[['fEmp','empresa'],['fFun','fundo'],['fAre','area'],['fCul','cultivo']];let SHOW=300;
+function fv(id){return N($(id).value)}
+function match(r,skip){const q=N($('q').value),e=$('fEst').value;if(e&&r.estado!==e)return false;for(const[id,k]of F){if(id===skip)continue;const v=fv(id);if(v&&!r._n[k].includes(v))return false}return!q||r._s.includes(q)}
+function base(skip){return ROWS.filter(r=>match(r,skip))}
+function fillOptions(){F.forEach(([id,k])=>{const opts=[...new Set(base(id).map(r=>r[k]).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'es'));$(id+'L').innerHTML=opts.map(o=>`<option value="${E(o)}">`).join('');$(id).parentNode.classList.toggle('has',!!$(id).value)})}
+function anyFilter(){return F.some(([id])=>$(id).value.trim())||$('q').value.trim()}
+function view(){let v=base('');return v.sort((a,b)=>{let x=SK==='fecha'?a.fecha:N(a[SK]),y=SK==='fecha'?b.fecha:N(b[SK]);return x<y?-SD:x>y?SD:(N(a.codigo)<N(b.codigo)?-1:1)})}
 function render(){
-  const v=view(),LIM=3000;
-  $('tb').innerHTML=v.length?v.slice(0,LIM).map(r=>`<tr><td><b>${E(r.codigo)}</b></td><td>${E(r.descripcion)}</td><td><span class="st"><span class="dot ${r.estado==='ACTIVO'?'active':'inactive'}"></span>${r.estado}</span></td><td>${E(r.empresa)}</td><td>${E(r.partida)}</td><td>${E(r.rubro)}</td><td>${E(r.area)}</td><td>${E(r.fundo)}</td><td>${E(r.cultivo)}</td><td style="white-space:nowrap">${fmt(r.fecha)}</td></tr>`).join(''):'<tr><td colspan="10" class="empty">No hay CECOs con esos filtros.</td></tr>';
-  $('sum').innerHTML=`<b>${v.length.toLocaleString('es-PE')}</b> CECOs${v.length>LIM?` (mostrando ${LIM.toLocaleString('es-PE')}; el Excel incluye todos)`:''} · <b>${new Set(v.map(r=>r.partida)).size.toLocaleString('es-PE')}</b> partidas · <b>${new Set(v.map(r=>r.rubro)).size}</b> rubros · <span class="muted">${HIDDEN.toLocaleString('es-PE')} CECOs ocultos por FILTRO = NO</span>`;
+  if(!anyFilter()){const tot=base('').length;$('tb').innerHTML=`<tr><td colspan="10" class="empty">Elige o escribe al menos un filtro (empresa, fundo, área, cultivo) o busca un texto para ver los CECOs.<br><span style="font-size:12px">Hay ${tot.toLocaleString('es-PE')} CECOs disponibles con el estado seleccionado.</span></td></tr>`;$('sum').innerHTML=`<b>${tot.toLocaleString('es-PE')}</b> CECOs disponibles · <span class="muted">${HIDDEN.toLocaleString('es-PE')} ocultos por FILTRO = NO</span>`;$('more').style.display='none';$('xls').disabled=true;return}
+  const v=view();$('xls').disabled=!v.length;
+  $('tb').innerHTML=v.length?v.slice(0,SHOW).map(r=>`<tr><td><b>${E(r.codigo)}</b></td><td>${E(r.descripcion)}</td><td><span class="st"><span class="dot ${r.estado==='ACTIVO'?'active':'inactive'}"></span>${r.estado}</span></td><td>${E(r.empresa)}</td><td>${E(r.fundo)}</td><td>${E(r.area)}</td><td>${E(r.cultivo)}</td><td style="white-space:nowrap">${fmt(r.fecha)}</td><td>${E(r.partida)}</td><td>${E(r.rubro)}</td></tr>`).join(''):'<tr><td colspan="10" class="empty">No hay CECOs con esos filtros.</td></tr>';
+  $('more').style.display=v.length>SHOW?'block':'none';$('moreBtn').textContent=`Mostrar más (${Math.min(SHOW,v.length).toLocaleString('es-PE')} de ${v.length.toLocaleString('es-PE')})`;
+  $('sum').innerHTML=`<b>${v.length.toLocaleString('es-PE')}</b> CECOs · <b>${new Set(v.map(r=>r.partida)).size.toLocaleString('es-PE')}</b> partidas · <b>${new Set(v.map(r=>r.rubro)).size}</b> rubros · <span class="muted">${HIDDEN.toLocaleString('es-PE')} ocultos por FILTRO = NO</span>`;
 }
-function onFilter(){fillOptions();render()}
-['fEmp','fFun','fAre','fCul','fEst'].forEach(id=>$(id).onchange=onFilter);$('q').oninput=onFilter;
+let TMR;function onFilter(){clearTimeout(TMR);TMR=setTimeout(()=>{SHOW=300;fillOptions();render()},200)}
+['fEmp','fFun','fAre','fCul'].forEach(id=>{$(id).oninput=onFilter;$(id).onchange=onFilter});$('fEst').onchange=onFilter;$('q').oninput=onFilter;
+document.querySelectorAll('.cb .x').forEach(b=>b.onclick=()=>{$(b.dataset.for).value='';onFilter();$(b.dataset.for).focus()});
+$('moreBtn').onclick=()=>{SHOW+=500;render()};
 $('clear').onclick=()=>{F.forEach(([id])=>$(id).value='');$('fEst').value='ACTIVO';$('q').value='';onFilter()};
 document.querySelectorAll('th[data-k]').forEach(th=>th.onclick=()=>{const k=th.dataset.k;if(SK===k)SD*=-1;else{SK=k;SD=1}document.querySelectorAll('.sm').forEach(x=>x.textContent='↕');th.querySelector('.sm').textContent=SD===1?'↑':'↓';render()});
 $('xls').onclick=()=>{
-  const rows=[['CODIGO','DESCRIPCION','ESTADO','EMPRESA','PARTIDA_ULTIMO_USO','RUBRO_ULTIMO_USO','AREA','FUNDO','CULTIVO','FECHA_ULTIMO_USO'],...view().map(r=>[r.codigo,r.descripcion,r.estado,r.empresa,r.partida,r.rubro,r.area,r.fundo,r.cultivo,fmt(r.fecha)])];
-  const ws=XLSX.utils.aoa_to_sheet(rows);ws['!cols']=[14,45,10,13,50,40,24,12,12,14].map(w=>({wch:w}));ws['!autofilter']={ref:ws['!ref']};
+  const rows=[['CODIGO','DESCRIPCION','ESTADO','EMPRESA','FUNDO','AREA','CULTIVO','FECHA_ULTIMO_USO','PARTIDA','RUBRO'],...view().map(r=>[r.codigo,r.descripcion,r.estado,r.empresa,r.fundo,r.area,r.cultivo,fmt(r.fecha),r.partida,r.rubro])];
+  const ws=XLSX.utils.aoa_to_sheet(rows);ws['!cols']=[14,45,10,13,12,24,12,14,50,40].map(w=>({wch:w}));ws['!autofilter']={ref:ws['!ref']};
   const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'CECOs');XLSX.writeFile(wb,'CECOs_por_area.xlsx');
 };
 init();
