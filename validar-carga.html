@@ -15,6 +15,13 @@ input,select{width:100%;border:1px solid var(--ln);border-radius:8px;padding:9px
 .st{display:inline-flex;align-items:center;gap:5px;font-weight:900;white-space:nowrap}.dot{width:9px;height:9px;border-radius:50%;display:inline-block}.d-ok{background:var(--g)}.d-rv{background:var(--y)}.d-er{background:var(--r)}.s-ok{color:var(--g)}.s-rv{color:var(--yt)}.s-er{color:var(--r)}.sug{color:var(--b);font-weight:700}.muted{color:var(--mu)}.note{font-size:11px;color:var(--mu);margin-top:8px}.hidden{display:none}.table th.sortable{cursor:pointer;user-select:none}.table th.sortable:hover{background:var(--bd)}.sm{font-size:10px;opacity:.85}
 .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--mu);margin-top:10px}.legend b{color:var(--tx)}
 @media(max-width:900px){.load{grid-template-columns:1fr}.tiles{grid-template-columns:1fr 1fr}.top{flex-direction:column;align-items:flex-start}}
+
+/* Navegación uniforme y siempre visible */
+.top{position:sticky;top:8px;z-index:50;box-shadow:0 5px 18px rgba(15,55,109,.10)}
+.nav{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.navbtn.active{background:var(--g);color:#fff;pointer-events:none}
+@media(max-width:760px){.top{align-items:flex-start;flex-direction:column}.topnav{width:100%;align-items:flex-start!important;flex-direction:column}.nav{width:100%}.navbtn{flex:1;text-align:center}}
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
@@ -27,10 +34,12 @@ input,select{width:100%;border:1px solid var(--ln);border-radius:8px;padding:9px
 </xml><![endif]-->
 </head><body>
 <div class="app">
-<header class="top card">
-  <div class="brand"><div class="logo">ASA | IA</div><div><div class="ey">MAESTRO DE CENTROS DE COSTO</div><h1>Validar carga de CECOs</h1></div></div>
-  <div class="nav"><a class="navbtn" href="index.html">← Consulta individual</a><a class="navbtn" href="consulta-masiva.html">Consulta masiva</a><a class="navbtn" href="cecos-por-area.html">Por área</a></div>
-</header>
+<header class="top card"><div class="brand"><div class="logo">ASA | IA</div><div><div class="ey">MAESTRO DE CENTROS DE COSTO</div><h1>Validar carga de CECOs</h1></div></div><nav class="nav" aria-label="Navegación principal">
+<a class="navbtn" href="index.html">Consulta individual</a>
+<a class="navbtn" href="consulta-masiva.html">Consulta masiva</a>
+<a class="navbtn active" href="validar-carga.html">Validar carga</a>
+<a class="navbtn" href="cecos-por-area.html">Por área</a>
+</nav></header>
 
 <section class="panel card">
   <div class="head">1. Carga tu archivo</div>

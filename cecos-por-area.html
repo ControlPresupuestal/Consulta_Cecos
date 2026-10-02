@@ -12,6 +12,16 @@ input,select{width:100%;border:1px solid var(--ln);border-radius:8px;padding:9px
 .st{display:inline-flex;align-items:center;gap:5px;font-weight:900;white-space:nowrap}.dot{width:9px;height:9px;border-radius:50%;display:inline-block}.active{background:var(--g)}.inactive{background:var(--r)}.muted{color:var(--mu)}.empty{padding:40px;text-align:center;color:var(--mu)}.error{color:var(--r);font-weight:700}
 .filters.adm{grid-template-columns:repeat(6,1fr) 1.6fr auto}.table tr.cit td{background:#fff4e5}.table tr.cit:hover td{background:#ffeccc}.ctag{display:inline-block;margin-left:6px;padding:1px 6px;border-radius:999px;background:#e8740c;color:#fff;font-size:10px;font-weight:900;white-space:nowrap;vertical-align:middle}.odot{display:inline-block;width:9px;height:9px;border-radius:50%;background:#e8740c;margin-left:8px;vertical-align:middle;opacity:.55;transition:opacity .15s}.odot:hover{opacity:1}.citnote{margin-top:10px;padding:10px 12px;border:1px solid #f0b46a;background:#fff4e5;color:#8a4b00;border-radius:10px;font-size:12px}.adm-banner{margin-top:10px;padding:8px 12px;border-radius:10px;background:#fff4e5;border:1px dashed #e8740c;color:#8a4b00;font-size:12px;font-weight:700}.hidtag{font-size:10px;color:#8a4b00;font-weight:800}
 @media(max-width:1000px){.filters{grid-template-columns:1fr 1fr}.top{flex-direction:column;align-items:flex-start}}
+
+/* Navegación uniforme y siempre visible */
+.top{position:sticky;top:8px;z-index:50;box-shadow:0 5px 18px rgba(15,55,109,.10)}
+.nav{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.navbtn.active{background:var(--g);color:#fff;pointer-events:none}
+@media(max-width:760px){.top{align-items:flex-start;flex-direction:column}.topnav{width:100%;align-items:flex-start!important;flex-direction:column}.nav{width:100%}.navbtn{flex:1;text-align:center}}
+
+.copycode{padding:3px 6px;margin-right:5px;background:#edf4fb;color:var(--b);border:1px solid #d7e1ec;border-radius:6px;vertical-align:middle}
+.copycode:hover{background:#dceaf8}
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
@@ -24,10 +34,12 @@ input,select{width:100%;border:1px solid var(--ln);border-radius:8px;padding:9px
 </xml><![endif]-->
 </head><body>
 <div class="app">
-<header class="top card">
-  <div class="brand"><div class="logo">ASA | IA</div><div><div class="ey">MAESTRO DE CENTROS DE COSTO</div><h1>CECOs por fundo, área y cultivo</h1></div></div>
-  <div class="nav"><a class="navbtn" href="index.html">← Consulta individual</a><a class="navbtn" href="consulta-masiva.html">Consulta masiva</a><a class="navbtn" href="validar-carga.html">Validar carga</a></div>
-</header>
+<header class="top card"><div class="brand"><div class="logo">ASA | IA</div><div><div class="ey">MAESTRO DE CENTROS DE COSTO</div><h1>CECOs por fundo, área y cultivo</h1></div></div><nav class="nav" aria-label="Navegación principal">
+<a class="navbtn" href="index.html">Consulta individual</a>
+<a class="navbtn" href="consulta-masiva.html">Consulta masiva</a>
+<a class="navbtn" href="validar-carga.html">Validar carga</a>
+<a class="navbtn active" href="cecos-por-area.html">Por área</a>
+</nav></header>
 
 <section class="filters card">
   <div><div class="lbl">Empresa</div><div class="cb"><input id="fEmp" list="fEmpL" placeholder="Todas (escribe o elige)" autocomplete="off"><button class="x" data-for="fEmp" title="Borrar">×</button><datalist id="fEmpL"></datalist></div></div>
@@ -87,7 +99,7 @@ function view(){let v=base('');return v.sort((a,b)=>{let x=SK==='fecha'?a.fecha:
 function render(){
   if(!anyFilter()){const tot=base('').length;$('tb').innerHTML=`<tr><td colspan="10" class="empty">Elige o escribe al menos un filtro (empresa, fundo, área, cultivo) o busca un texto para ver los CECOs.<br><span style="font-size:12px">Hay ${tot.toLocaleString('es-PE')} CECOs disponibles con el estado seleccionado.</span></td></tr>`;$('sum').innerHTML=`<b>${tot.toLocaleString('es-PE')}</b> CECOs disponibles · <span class="muted">${HIDDEN.toLocaleString('es-PE')} ocultos por FILTRO = NO</span>`;$('more').style.display='none';$('xls').disabled=true;return}
   const v=view();$('xls').disabled=!v.length;
-  $('tb').innerHTML=v.length?v.slice(0,SHOW).map(r=>`<tr class="${r.cit?'cit':''}"><td><b>${E(r.codigo)}</b>${r.cit?'<span class="ctag">⚠ CÍTRICO</span>':''}</td><td>${E(r.descripcion)}</td><td><span class="st"><span class="dot ${r.estado==='ACTIVO'?'active':'inactive'}"></span>${r.estado}</span></td><td>${E(r.empresa)}</td><td>${E(r.fundo)}</td><td>${E(r.area)}</td><td>${E(r.cultivo)}</td><td style="white-space:nowrap">${fmt(r.fecha)}</td><td>${E(r.partida)}</td><td>${E(r.rubro)}${r.hid?' <span class="hidtag">(oculto: FILTRO NO)</span>':''}</td></tr>`).join(''):'<tr><td colspan="10" class="empty">No hay CECOs con esos filtros.</td></tr>';
+  $('tb').innerHTML=v.length?v.slice(0,SHOW).map(r=>`<tr class="${r.cit?'cit':''}"><td><button class="copycode" title="Copiar código" aria-label="Copiar código" onclick='copyCeco(${JSON.stringify(r.codigo)},this)'>📋</button><b>${E(r.codigo)}</b>${r.cit?'<span class="ctag">⚠ CÍTRICO</span>':''}</td><td>${E(r.descripcion)}</td><td><span class="st"><span class="dot ${r.estado==='ACTIVO'?'active':'inactive'}"></span>${r.estado}</span></td><td>${E(r.empresa)}</td><td>${E(r.fundo)}</td><td>${E(r.area)}</td><td>${E(r.cultivo)}</td><td style="white-space:nowrap">${fmt(r.fecha)}</td><td>${E(r.partida)}</td><td>${E(r.rubro)}${r.hid?' <span class="hidtag">(oculto: FILTRO NO)</span>':''}</td></tr>`).join(''):'<tr><td colspan="10" class="empty">No hay CECOs con esos filtros.</td></tr>';
   $('more').style.display=v.length>SHOW?'block':'none';$('moreBtn').textContent=`Mostrar más (${Math.min(SHOW,v.length).toLocaleString('es-PE')} de ${v.length.toLocaleString('es-PE')})`;
   $('sum').innerHTML=`<b>${v.length.toLocaleString('es-PE')}</b> CECOs · <b>${new Set(v.map(r=>r.partida)).size.toLocaleString('es-PE')}</b> partidas · <b>${new Set(v.map(r=>r.rubro)).size}</b> rubros${(n=>n?` · <b style="color:#b35c00">⚠ ${n.toLocaleString('es-PE')} de cítricos</b>`:'')(v.filter(r=>r.cit).length)}${cit()==='SOLO'?` (${v.filter(r=>r.estado==='ACTIVO').length} activos · ${v.filter(r=>r.estado==='INACTIVO').length} dados de baja)`:''} · <span class="muted">${HIDDEN.toLocaleString('es-PE')} ocultos por FILTRO = NO</span>`;
 }
@@ -102,6 +114,8 @@ $('xls').onclick=()=>{
   const ws=XLSX.utils.aoa_to_sheet(rows);ws['!cols']=[14,45,10,13,12,24,12,14,50,40,26].map(w=>({wch:w}));ws['!autofilter']={ref:ws['!ref']};
   const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'CECOs');XLSX.writeFile(wb,'CECOs_por_area.xlsx');
 };
+window.copyCeco=async(c,b)=>{try{await navigator.clipboard.writeText(c);const old=b.textContent;b.textContent='✓';b.title='Código copiado';setTimeout(()=>{b.textContent=old;b.title='Copiar código'},1200)}catch(e){prompt('Copia el código:',c)}};
+
 init();
 </script>
 </body></html>

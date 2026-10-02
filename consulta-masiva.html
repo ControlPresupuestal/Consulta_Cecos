@@ -13,6 +13,13 @@
 .actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}button{border:0;border-radius:8px;padding:9px 12px;font-weight:800;cursor:pointer}.primary{background:var(--b);color:#fff}.light{background:#edf2f7;color:var(--tx)}button:disabled{opacity:.5;cursor:not-allowed}
 .summary{font-size:12px;color:var(--mu);margin:0 0 8px}.summary b{color:var(--tx)}.tabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px}.tab{background:#edf2f7;color:var(--tx);padding:7px 10px;border-radius:999px;font-size:12px}.tab.active{background:var(--b);color:#fff}.tab .n{font-weight:900}.table th.sortable{cursor:pointer;user-select:none}.table th.sortable:hover{background:var(--bd)}.sortmark{font-size:10px;opacity:.85;margin-left:4px}.scroll{overflow:auto;border:1px solid var(--ln);border-radius:10px;max-height:560px}.table{width:100%;border-collapse:collapse;min-width:1600px;font-size:12px}.table th{position:sticky;top:0;background:var(--b);color:#fff;padding:8px;text-align:left;z-index:1}.table td{padding:8px;border-bottom:1px solid #edf2f7;vertical-align:top}.table tr:hover td{background:#f8fbfe}.notfound td{background:#fff4f2;color:var(--r);font-weight:700}.dot{width:9px;height:9px;border-radius:50%;display:inline-block;flex:0 0 9px}.active{background:var(--g)}.inactive{background:var(--r)}.status{display:inline-flex;align-items:center;gap:5px;font-weight:900}.plan{color:var(--yt);font-weight:900}.muted{color:var(--mu)}.loader{padding:50px;text-align:center;color:var(--mu);font-weight:700}.error{color:var(--r)}
 @media(max-width:900px){.grid{grid-template-columns:1fr}.top{align-items:flex-start;flex-direction:column}}
+
+/* Navegación uniforme y siempre visible */
+.top{position:sticky;top:8px;z-index:50;box-shadow:0 5px 18px rgba(15,55,109,.10)}
+.nav{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.navbtn.active{background:var(--g);color:#fff;pointer-events:none}
+@media(max-width:760px){.top{align-items:flex-start;flex-direction:column}.topnav{width:100%;align-items:flex-start!important;flex-direction:column}.nav{width:100%}.navbtn{flex:1;text-align:center}}
+
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 
@@ -26,10 +33,12 @@
 </head>
 <body>
 <div class="app">
-<header class="top card">
-  <div class="brand"><div class="logo">ASA | IA</div><div><div class="ey">MAESTRO DE CENTROS DE COSTO</div><h1>Consulta masiva de CECOs</h1></div></div>
-  <div style="display:flex;gap:8px"><a class="navbtn" href="index.html">← Consulta individual</a><a class="navbtn" href="validar-carga.html">Validar carga →</a><a class="navbtn" href="cecos-por-area.html">Por área →</a></div>
-</header>
+<header class="top card"><div class="brand"><div class="logo">ASA | IA</div><div><div class="ey">MAESTRO DE CENTROS DE COSTO</div><h1>Consulta masiva de CECOs</h1></div></div><nav class="nav" aria-label="Navegación principal">
+<a class="navbtn" href="index.html">Consulta individual</a>
+<a class="navbtn active" href="consulta-masiva.html">Consulta masiva</a>
+<a class="navbtn" href="validar-carga.html">Validar carga</a>
+<a class="navbtn" href="cecos-por-area.html">Por área</a>
+</nav></header>
 
 <section class="panel card">
   <div class="head">Consulta varios códigos a la vez</div>
