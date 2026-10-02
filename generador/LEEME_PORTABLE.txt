@@ -1,0 +1,23 @@
+GENERADOR PORTATIL DE CONSULTA CECOs
+
+No necesita instalar Python.
+
+1. Abra la carpeta "entradas".
+2. Mantenga el archivo cecos.json que ya viene incluido.
+3. Copie dentro de "entradas" estos cinco archivos:
+
+   Cecos_ASA.xlsx
+   Cecos_IA.xlsx
+   CECOS_Historico.xlsx
+   ASA_DataCostos.xlsx
+   IA_DataCostos.xlsx
+
+4. Regrese a esta carpeta.
+5. Haga doble clic en Generador_CECOs.exe.
+6. Espere hasta que aparezca el mensaje GENERACION TERMINADA.
+7. Los nuevos archivos estaran dentro de la carpeta "salida".
+
+El proceso puede tardar varios minutos debido al volumen de movimientos.
+No cierre la ventana mientras esta trabajando.
+
+El programa no modifica los Excel originales y no publica los importes.

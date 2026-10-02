@@ -31,6 +31,13 @@ ORIGINS = {"ASA": "ASA", "IA": "INTERANDINA"}
 TARGET_CHUNK_BYTES = 550_000
 
 
+def application_dir() -> Path:
+    """Carpeta del script o del ejecutable portatil de Windows."""
+    if getattr(sys, "frozen", False):
+        return Path(sys.executable).resolve().parent
+    return Path(__file__).resolve().parent
+
+
 def clean(value) -> str:
     if value is None:
         return ""
@@ -354,7 +361,7 @@ def partition_consumptions(output_dir: Path, final, periods, sources, generated)
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Genera datos para Consulta_Cecos")
-    script_dir = Path(__file__).resolve().parent
+    script_dir = application_dir()
     parser.add_argument("--entradas", default=str(script_dir / "entradas"))
     parser.add_argument("--salida", default=str(script_dir / "salida"))
     parser.add_argument("--cecos-actual", default=None)
@@ -363,7 +370,7 @@ def parse_args():
 
 def main():
     args = parse_args()
-    script_dir = Path(__file__).resolve().parent
+    script_dir = application_dir()
     input_dir = Path(args.entradas).resolve()
     output_dir = Path(args.salida).resolve()
     output_dir.mkdir(parents=True, exist_ok=True)

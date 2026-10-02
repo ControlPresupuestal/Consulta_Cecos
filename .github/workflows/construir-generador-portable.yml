@@ -1,0 +1,42 @@
+name: Construir generador portable
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  construir:
+    runs-on: windows-latest
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Python para la compilacion
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar componentes de compilacion
+        run: python -m pip install openpyxl pyinstaller
+
+      - name: Crear ejecutable de Windows
+        run: pyinstaller --onefile --name Generador_CECOs generador/generar_datos.py
+
+      - name: Preparar paquete portable
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path paquete/entradas | Out-Null
+          Copy-Item dist/Generador_CECOs.exe paquete/Generador_CECOs.exe
+          Copy-Item generador/LEEME_PORTABLE.txt paquete/LEEME.txt
+          Copy-Item cecos.json paquete/entradas/cecos.json
+          Compress-Archive -Path paquete/* -DestinationPath Generador_CECOs_Portable.zip -Force
+
+      - name: Guardar programa descargable
+        uses: actions/upload-artifact@v4
+        with:
+          name: Generador_CECOs_Portable
+          path: Generador_CECOs_Portable.zip
+          if-no-files-found: error
+          retention-days: 30
