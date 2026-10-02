@@ -2,6 +2,12 @@ name: Construir generador portable
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "generador/**"
+      - ".github/workflows/construir-generador-portable.yml"
 
 permissions:
   contents: read
