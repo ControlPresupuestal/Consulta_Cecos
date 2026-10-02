@@ -1,0 +1,4 @@
+entradas/*.xlsx
+entradas/cecos.json
+salida/
+__pycache__/
